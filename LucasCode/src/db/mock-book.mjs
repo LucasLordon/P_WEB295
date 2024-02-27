@@ -1,7 +1,6 @@
 let dataBooks = [
     {
         id: 1,
-        name: "1984",
         price: 9.99,
         created: new Date(),
         title: "1984",
@@ -13,7 +12,6 @@ let dataBooks = [
     },
     {
         id: 2,
-        name: "Le Seigneur des Anneaux : La Communauté de l'Anneau",
         price: 14.99,
         created: new Date(),
         title: "Le Seigneur des Anneaux : La Communauté de l'Anneau",
@@ -25,7 +23,6 @@ let dataBooks = [
     },
     {
         id: 3,
-        name: "Harry Potter à l'école des sorciers",
         price: 12.99,
         created: new Date(),
         title: "Harry Potter à l'école des sorciers",
@@ -37,7 +34,6 @@ let dataBooks = [
     },
     {
         id: 4,
-        name: "Orgueil et Préjugés",
         price: 8.49,
         created: new Date(),
         title: "Orgueil et Préjugés",
@@ -49,7 +45,6 @@ let dataBooks = [
     },
     {
         id: 5,
-        name: "Le Petit Prince",
         price: 6.99,
         created: new Date(),
         title: "Le Petit Prince",
@@ -61,7 +56,6 @@ let dataBooks = [
     },
     {
         id: 6,
-        name: "Les Misérables",
         price: 19.99,
         created: new Date(),
         title: "Les Misérables",
@@ -74,25 +68,5 @@ let dataBooks = [
 ]
 
 
-const getBook = (bookId) => {
-    return dataBooks.find((book) => book.id == bookId);
-};
 
-const removeBook = (bookId) => {
-    dataBooks = dataBooks.filter((book) => book.id != bookId);
-};
-
-const updateBook = (bookId, updatedBook) => {
-    dataBooks = dataBooks.map((book) =>
-    book.id == bookId ? updatedBook : book
-    );
-};
-
-const getUniqueId = () => {
-    const booksIds = dataBooks.map((book) => book.id);
-    const maxId = booksIds.reduce((a, b) => Math.max(a, b));
-    const uniqueId = maxId + 1;
-    return uniqueId;
-};
-
-export { dataBooks, getBook, removeBook, updateBook, getUniqueId };
+export { dataBooks };
