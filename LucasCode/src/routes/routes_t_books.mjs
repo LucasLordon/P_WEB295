@@ -1,14 +1,32 @@
 import express from "express";
 import { success } from "./helper.mjs";
 import { modelBook } from "../db/sequelize.mjs";
-import { ValidationError } from 'sequelize';
+import { ValidationError, Op } from 'sequelize';
 
 const booksRouter = express();
 
 ///// Get ALL books
 
 booksRouter.get("/", (req, res) => {
-    modelBook.findAll().then((books) => {
+    if (req.query.title) {
+        if (req.query.title.length < 2) {
+            const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
+            return res.status(400).json({ message });
+            }
+        let limit = 3;
+        if (req.query.limit) {
+            limit = parseInt(req.query.limit);
+        }
+        return modelBook.findAndCountAll({
+            where: { title: { [Op.like]: `%${req.query.title}%` } },
+            order: ["title"],
+            limit: limit,
+        }).then((books) => {
+            const message = `Il y a ${books.count} livres qui correspondent au terme de la recherche`;
+            res.json(success(message, books));
+        });
+    }
+    modelBook.findAll({order:["title"]}).then((books) => {
         const message = "La liste des livres a bien été récupérée.";
         res.json(success(message, books));
     })
