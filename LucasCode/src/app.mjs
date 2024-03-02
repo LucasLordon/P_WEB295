@@ -27,3 +27,9 @@ app.use("/api/books", booksRouter);
 app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`);
 });
+
+app.use(({ res }) => {
+    const message =
+        "Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre URL.";
+    res.status(404).json(message);
+});
