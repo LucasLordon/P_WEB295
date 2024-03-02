@@ -2,7 +2,7 @@ import express from "express";
 import { dataUsers, getUser,removeUser,updateUser } from "../db/mock-user.mjs";
 import { success,getUniqueUserId } from "./helper.mjs";
 import { UserTable } from "../db/sequelize.mjs";
-import { Error } from "sequelize";
+import { BaseError, Error } from "sequelize";
 
 const usersRouter = express();
 
@@ -16,7 +16,10 @@ usersRouter.get("/:id",(req,res) => {
     UserTable.findByPk(req.params.id).then((usersData) => {
         const message = `L'utilisateur dont l'id vaut ${usersData.id} a bien été récupéré.`;
         res.json(success(message,usersData))
-    });
+    }).catch((BaseError) => {
+            const message = `L'utilisateur ayant l'id ${req.params.id} n'as pas pu être trouver`;
+            res.json(success(message,BaseError));
+    })
 });
 
 usersRouter.post("/",(req,res) => {
