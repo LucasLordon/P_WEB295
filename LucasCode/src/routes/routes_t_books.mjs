@@ -1,6 +1,7 @@
 import express from "express";
 import { success } from "./helper.mjs";
 import { modelBook } from "../db/sequelize.mjs";
+import { ValidationError } from 'sequelize';
 
 const booksRouter = express();
 
@@ -10,16 +11,31 @@ booksRouter.get("/", (req, res) => {
     modelBook.findAll().then((books) => {
         const message = "La liste des livres a bien été récupérée.";
         res.json(success(message, books));
-    });
+    })
+        .catch((error) => {
+            const message =
+                "La liste des livres n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
+            res.status(500).json({ message, data: error });
+        });
 });
 
 //// Get one book by id
 
 booksRouter.get("/:id", (req, res) => {
     modelBook.findByPk(req.params.id).then((book) => {
+        if (book === null) {
+            const message =
+                "Le livre demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+            return res.status(404).json({ message });
+        }
         const message = `Le livre dont l'id vaut ${book.id} a bien été récupéré.`;
         res.json(success(message, book));
-    });
+    })
+        .catch((error) => {
+            const message =
+                "Le livre n'a pas pu être récupéré. Merci de réessayer dans quelques instants.";
+            res.status(500).json({ message, data: error });
+        });
 });
 
 
@@ -30,26 +46,40 @@ booksRouter.get("/:id", (req, res) => {
 
 booksRouter.post("/", (req, res) => {
     modelBook.create(req.body).then((createdBook) => {
-        // Définir un message pour le consommateur de l'API REST
-        const message = `Le livre ${createdBook.name} a bien été créé !`;
-        // Retourner la réponse HTTP en json avec le msg et le produit créé
+        const message = `Le livre [${createdBook.title}] a bien été créé !`;
         res.json(success(message, createdBook));
-    });
+    })
+        .catch((error) => {
+            if (error instanceof ValidationError) {
+                return res.status(400).json({ message: error.message, data: error });
+            }
+            const message =
+                "Le livre n'a pas pu être ajouté. Merci de réessayer dans quelques instants.";
+            res.status(500).json({ message, data: error });
+        });
 });
 
 //// Delete a book
 //curl -X DELETE http://localhost:3000/api/books/1
 booksRouter.delete("/:id", (req, res) => {
-    modelBook.findByPk(req.params.id).then((deletedBook) => {
-        modelBook.destroy({
-            where: { id: deletedBook.id },
-        }).then((_) => {
-            // Définir un message pour le consommateur de l'API REST
-            const message = `Le livre ${deletedBook.name} a bien été supprimé !`;
-            // Retourner la réponse HTTP en json avec le msg et le produit créé
-            res.json(success(message, deletedBook));
+    modelBook.findByPk(req.params.id)
+        .then((deletedBook) => {
+            if (deletedBook === null) {
+                const message =
+                    "Le livre demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+                return res.status(404).json({ message });
+            }
+            return modelBook.destroy({
+                where: { id: deletedBook.id },
+            }).then((_) => {
+                const message = `Le livre [${deletedBook.title}] a bien été supprimé !`;
+                res.json(success(message, deletedBook));
+            });
+        })
+        .catch((error) => {
+            const message = "Le produit n'a pas pu être supprimé. Merci de réessayer dans quelques instants.";
+            res.status(500).json({ message, data: error });
         });
-    });
 });
 
 
@@ -57,14 +87,21 @@ booksRouter.delete("/:id", (req, res) => {
 
 booksRouter.put("/:id", (req, res) => {
     const bookId = req.params.id;
-    modelBook.update(req.body, { where: { id: bookId } }).then((_) => {
-        modelBook.findByPk(bookId).then((updatedBook) => {
-            // Définir un message pour l'utilisateur de l'API REST
-            const message = `Le livre ${updatedBook.name} dont l'id vaut ${updatedBook.id} a été mis à jour avec succès`;
-            // Retourner la réponse HTTP en json avec le msg et le produit créé
-            res.json(success(message, updatedBook));
+    modelBook.update(req.body, { where: { id: bookId } })
+        .then((_) => {
+            return Product.findByPk(productId).then((updatedBook) => {
+                if (updatedBook === null) {
+                    const message = "Le livre demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+                    return res.status(404).json({ message });
+                }
+                const message = `Le livre : [${updatedBook.title}], dont l'id vaut ${updatedBook.id} a été mis à jour avec succès`;
+                res.json(success(message, updatedBook));
+            });
+        })
+        .catch((error) => {
+            const message = "Le livre n'a pas pu être mis à jour. Merci de réessayer dans quelques instants.";
+            res.status(500).json({ message, data: error });
         });
-    });
 });
 
 

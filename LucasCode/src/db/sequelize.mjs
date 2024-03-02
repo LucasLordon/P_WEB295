@@ -31,7 +31,6 @@ const importBooks = () => {
         modelBook.create({
             price: book.price,
             title:book.title,
-            excerpt:book.excerpt,
             image:book.image,
             category:book.category,
             page_count:book.page_count,
