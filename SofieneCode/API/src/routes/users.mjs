@@ -2,11 +2,29 @@ import express from "express";
 import { dataUsers, getUser,removeUser,updateUser } from "../db/mock-user.mjs";
 import { success,getUniqueUserId } from "./helper.mjs";
 import { UserTable } from "../db/sequelize.mjs";
-import { BaseError, Error, ValidationError } from "sequelize";
+import { BaseError, Error, ValidationError,Op } from "sequelize";
 
 const usersRouter = express();
 
 usersRouter.get("/",(req,res) => {
+    if(req.query.pseudo ){
+        if(req.query.pseudo.length < 2){
+            const message = "Veuillez faire une recherche a plus de 1 caractère"
+            return res.status(400).json({message});
+        }
+        let dynamicLimit =5;
+        if(req.query.limit){
+            dynamicLimit = parseInt(req.query.limit);
+        }
+        return UserTable.findAll({
+            where: {pseudo: {[ Op.like]: `%${req.query.pseudo}%`}},
+            order: ["pseudo"],
+            limit: dynamicLimit,
+        }).then((usersList) => {
+            const message = `Il y a ${usersList.length} utilisateurs qui correspondent à votre recherche`;
+            res.json(success(message, usersList));
+        })
+    }
     UserTable.findAll().then((usersData) => {
         const message = "La liste des utilisateurs a bien été récupérée.";
         res.json(success(message, usersData));

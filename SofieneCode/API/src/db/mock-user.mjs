@@ -13,7 +13,7 @@ let dataUsers = [
     },
     {
       id:2,
-      pseudo: "leonardoDicarpacio",
+      pseudo: "MeonardoDicarpacio",
       date_entree: new Date("2006-09-24"),
       mot_de_passe: "jdedded",
     },
@@ -25,7 +25,7 @@ let dataUsers = [
     },
     {
       id:4,
-      pseudo: "McMC",
+      pseudo: "McMa",
       date_entree: new Date("2006-09-24"),
       mot_de_passe: "jdedded",
     },
@@ -37,7 +37,7 @@ let dataUsers = [
     },
     {
       id:6,
-      pseudo: "HMMMMMMMM",
+      pseudo: "MMMMMMMMa",
       date_entree: new Date("2006-09-24"),
       mot_de_passe: "jdedded",
     },
