@@ -2,7 +2,7 @@ import express from "express";
 import { dataUsers, getUser,removeUser,updateUser } from "../db/mock-user.mjs";
 import { success,getUniqueUserId } from "./helper.mjs";
 import { UserTable } from "../db/sequelize.mjs";
-import { BaseError, Error } from "sequelize";
+import { BaseError, Error, ValidationError } from "sequelize";
 
 const usersRouter = express();
 
@@ -68,6 +68,9 @@ usersRouter.put("/:id",(req,res) => {
         })
     }).catch((error) => {
         const message = `L'utilisateur ayant l'id ${userID} n'as pas pu être modifier`;
+        if(error instanceof ValidationError){
+            return res.status(500).json({message,data:error});
+        }
         res.status(500).json({message,data:error});
     });
 });

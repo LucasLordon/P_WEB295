@@ -13,6 +13,18 @@ const UserModel = (sequelize, DataTypes) => {
       pseudo: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isAlphanumeric: {
+            args: true,
+            msg: "Veuillez utiliser uniquement des lettres et des chiffres pour le pseudo",
+          },
+          notNull: {
+           msg: "Le pseudo est un champs obligatoire"
+          },
+          notEmpty: {
+            msg: "Le pseudo ne peut pas être vide"
+          }
+        },
       },
       date_entree: {
         type: DataTypes.DATE,
@@ -21,6 +33,14 @@ const UserModel = (sequelize, DataTypes) => {
       mot_de_passe: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: {
+           msg: "Le mot de passe est un champs obligatoire"
+          },
+          notEmpty: {
+            msg: "Le mot de passe ne peut pas être vide"
+          }
+        },
       },
     },
     {
@@ -30,4 +50,4 @@ const UserModel = (sequelize, DataTypes) => {
     }
   );
 };
-export {UserModel};
+export { UserModel };
