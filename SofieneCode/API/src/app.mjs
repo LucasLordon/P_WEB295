@@ -12,6 +12,7 @@ const port = 3000;
     .catch((error) => console.error("Impossible de se connecter à la db"));
 initDB();
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -22,4 +23,9 @@ app.get("/api/", (req, res) => {
   res.redirect(`http://localhost:${port}`);
 });
 app.use("/api/users", usersRouter);
+
+app.use(({res}) => {
+  const message = "Impossible de trouver la ressource demandée ! Veuillez essayer une autre URL";
+  res.status(404).json(message);
+});
 
