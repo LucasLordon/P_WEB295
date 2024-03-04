@@ -1,7 +1,8 @@
 import express from "express";
 import { usersRouter } from "./routes/users.mjs";
 import { initDB, sequelize } from "./db/sequelize.mjs";
-import { error } from "console";
+import { loginRouter } from "./routes/login.mjs";
+
 
 const app = express();
 const port = 3000;
@@ -23,6 +24,7 @@ app.get("/api/", (req, res) => {
   res.redirect(`http://localhost:${port}`);
 });
 app.use("/api/users", usersRouter);
+app.use("/api/login",loginRouter);
 
 app.use(({res}) => {
   const message = "Impossible de trouver la ressource demandée ! Veuillez essayer une autre URL";

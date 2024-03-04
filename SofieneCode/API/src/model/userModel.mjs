@@ -13,6 +13,7 @@ const UserModel = (sequelize, DataTypes) => {
       pseudo: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: { msg: "Ce username est déjà pris." },
         validate: {
           isAlphanumeric: {
             args: true,
