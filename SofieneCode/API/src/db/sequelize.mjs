@@ -14,6 +14,7 @@ const sequelize = new Sequelize(
 
 import { dataUsers } from "./mock-user.mjs";
 import { UserModel } from "../model/userModel.mjs";
+import bcrypt from 'bcrypt';
 const UserTable = UserModel(sequelize,DataTypes);
 
 let initDB = () =>{
@@ -27,11 +28,15 @@ let initDB = () =>{
 
 const importUser = () => {
     dataUsers.map((user) => {
-        UserTable.create({
-            pseudo : user.pseudo,
-            date_entree: user.date_entree,
-            mot_de_passe: user.mot_de_passe
-        }).then((user) => console.log(user.toJSON()));
+        bcrypt
+        .hash(user.mot_de_passe,10)
+        .then((hash) => {
+            UserTable.create({
+                pseudo : user.pseudo,
+                date_entree: user.date_entree,
+                mot_de_passe: hash
+            }).then((user) => console.log(user.toJSON()));
+        })
     });
 };
 export {sequelize,initDB,UserTable};
