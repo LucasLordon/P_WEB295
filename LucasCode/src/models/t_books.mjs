@@ -49,17 +49,9 @@ const BookModel = (sequelize, DataTypes) => {
                     },
                 }
             },
-            category: {
-                type: DataTypes.STRING,
+            categories_id: {
+                type: DataTypes.INTEGER,
                 allowNull: false,
-                validate: {
-                    notEmpty: {
-                        msg: "La catégorie ne peut pas être vide.",
-                    },
-                    notNull: {
-                        msg: "La catégorie est une propriété obligatoire.",
-                    },
-                }
             },
             page_count: {
                 type: DataTypes.INTEGER,
@@ -94,6 +86,7 @@ const BookModel = (sequelize, DataTypes) => {
             createdAt: "created",
             updatedAt: false,
         }
+        
     );
 };
 export { BookModel };

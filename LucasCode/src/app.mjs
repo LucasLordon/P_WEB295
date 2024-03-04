@@ -1,5 +1,6 @@
 import express from "express";
 import { booksRouter } from "./routes/routes_t_books.mjs";
+import { categorysRouter } from "./routes/routes_t_categorys.mjs";
 import { initDb, sequelize } from "./db/sequelize.mjs";
 
 const app = express();
@@ -24,6 +25,8 @@ app.get("/api/", (req, res) => {
 });
 
 app.use("/api/books", booksRouter);
+app.use("/api/categorys", categorysRouter);
+
 app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`);
 });
