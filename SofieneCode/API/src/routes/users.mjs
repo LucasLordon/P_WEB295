@@ -3,6 +3,7 @@ import { success, getUniqueUserId } from "./helper.mjs";
 import { UserTable } from "../db/sequelize.mjs";
 import { BaseError, Error, ValidationError, Op } from "sequelize";
 import { auth } from "../auth/auth.mjs";
+import bcrypt from "bcrypt";
 
 const usersRouter = express();
 
@@ -48,16 +49,19 @@ usersRouter.get("/:id", auth, (req, res) => {
     });
 });
 
-usersRouter.post("/", auth, (req, res) => {
-  UserTable.create(req.body)
-    .then((userCreated) => {
-      const message = `L'utilisateur ${userCreated.pseudo} à bien été créé`;
-      res.json(success(message, userCreated));
-    })
-    .catch((error) => {
-      const message = `L'utilisateur n'a pas pu être ajouter`;
-      res.status(500).json({ message, data: error });
-    });
+usersRouter.post("/", (req, res) => {
+  bcrypt.hash(req.body.mot_de_passe, 10).then((hashedPWD) => {
+    req.body.mot_de_passe = hashedPWD;
+    UserTable.create(req.body)
+      .then((userCreated) => {
+        const message = `L'utilisateur ${userCreated.pseudo} à bien été créé`;
+        res.json(success(message, userCreated));
+      })
+      .catch((error) => {
+        const message = `L'utilisateur n'a pas pu être ajouter`;
+        res.status(500).json({ message, data: error });
+      });
+  });
 });
 
 usersRouter.delete("/:id", auth, (req, res) => {
