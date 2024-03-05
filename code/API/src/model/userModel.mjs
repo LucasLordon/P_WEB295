@@ -30,6 +30,7 @@ const UserModel = (sequelize, DataTypes) => {
       date_entree: {
         type: DataTypes.DATE,
         allowNull: false,
+
       },
       mot_de_passe: {
         type: DataTypes.STRING,
