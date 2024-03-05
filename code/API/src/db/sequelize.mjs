@@ -19,7 +19,6 @@ const sequelize = new Sequelize(
     }
 );
 
-
 const UserTable = UserModel(sequelize,DataTypes);
 const modelBook = BookModel(sequelize, DataTypes);
 const modelCategory = CategoryModel(sequelize, DataTypes);
@@ -79,4 +78,4 @@ const importCategory = () => {
         }).then((category) => console.log(category.toJSON()));
     });
 };
-export {sequelize,initDB,UserTable};
+export {sequelize,initDB,UserTable,  modelBook, modelCategory};

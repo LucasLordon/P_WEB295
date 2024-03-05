@@ -4,6 +4,7 @@ import { CategoryModel } from "../models/t_categorys.mjs";
 import { dataBooks } from "../db/mock-book.mjs";
 import { dataCategory } from "./mock-category.mjs";
 
+//
 const sequelize = new Sequelize(
     "db_librairie", // Nom de la DB qui doit exister
     "root", // Nom de l'utilisateur
@@ -17,7 +18,9 @@ const sequelize = new Sequelize(
 );
 
 // Le modèle Book
+//
 const modelBook = BookModel(sequelize, DataTypes);
+//
 const modelCategory = CategoryModel(sequelize, DataTypes);
 
 modelCategory.hasMany(modelBook,{
@@ -28,7 +31,7 @@ modelBook.belongsTo(modelCategory, {
     foreignKey: "categories_id",
 })
 
-
+//
 let initDb = () => {
     return sequelize
         .sync({ force: true }) // Force la synchro => donc supprime les données également
@@ -38,6 +41,7 @@ let initDb = () => {
             console.log("La base de données db_librairie a bien été synchronisée");
         });
 };
+//
 const importBooks = () => {
     // import tous les produits présents dans le fichier db/mock-product
     dataBooks.map((book) => {
@@ -51,7 +55,7 @@ const importBooks = () => {
         }).then((book) => console.log(book.toJSON()));
     });
 };
-
+//
 const importCategory = () => {
     // import tous les produits présents dans le fichier db/mock-product
     dataCategory.map((category) => {

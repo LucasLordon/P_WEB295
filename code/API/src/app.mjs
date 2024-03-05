@@ -2,6 +2,8 @@ import express from "express";
 import { usersRouter } from "./routes/users.mjs";
 import { initDB, sequelize } from "./db/sequelize.mjs";
 import { loginRouter } from "./routes/login.mjs";
+import { booksRouter } from "./routes/routes_t_books.mjs";
+import { categorysRouter } from "./routes/routes_t_categorys.mjs";
 
 
 const app = express();
@@ -15,7 +17,7 @@ initDB();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+    res.send("API REST of a virtual library !");
 });
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
@@ -25,6 +27,9 @@ app.get("/api/", (req, res) => {
 });
 app.use("/api/users", usersRouter);
 app.use("/api/login",loginRouter);
+
+app.use("/api/books", booksRouter);
+app.use("/api/categorys", categorysRouter);
 
 app.use(({res}) => {
   const message = "Impossible de trouver la ressource demandée ! Veuillez essayer une autre URL";

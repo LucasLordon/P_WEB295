@@ -1,3 +1,6 @@
+import { DataTypes } from "sequelize";
+import { sequelize } from "../db/sequelize.mjs";
+
 const BookModel = (sequelize, DataTypes) => {
     return sequelize.define(
         "Book",
