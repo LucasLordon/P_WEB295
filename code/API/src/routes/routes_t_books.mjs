@@ -2,12 +2,13 @@ import express from "express";
 import { success } from "./helper.mjs";
 import { modelBook } from "../db/sequelize.mjs";
 import { ValidationError, Op } from 'sequelize';
+import { auth } from "../auth/auth.mjs";
 
 const booksRouter = express();
 
 ///// Get ALL books
 
-booksRouter.get("/", (req, res) => {
+booksRouter.get("/", auth,(req, res) => {
     if (req.query.title) {
         if (req.query.title.length < 2) {
             const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
@@ -39,7 +40,7 @@ booksRouter.get("/", (req, res) => {
 
 //// Get one book by id
 
-booksRouter.get("/:id", (req, res) => {
+booksRouter.get("/:id", auth,(req, res) => {
     modelBook.findByPk(req.params.id).then((book) => {
         if (book === null) {
             const message =
@@ -62,7 +63,7 @@ booksRouter.get("/:id", (req, res) => {
 // curl -X POST http://localhost:3000/api/books -H "Content-Type: application/json" -d '{"name": "HamburgerVaudois","price": 9.99}'
 
 
-booksRouter.post("/", (req, res) => {
+booksRouter.post("/",auth, (req, res) => {
     modelBook.create(req.body).then((createdBook) => {
         const message = `Le livre [${createdBook.title}] a bien été créé !`;
         res.json(success(message, createdBook));
@@ -79,7 +80,7 @@ booksRouter.post("/", (req, res) => {
 
 //// Delete a book
 //curl -X DELETE http://localhost:3000/api/books/1
-booksRouter.delete("/:id", (req, res) => {
+booksRouter.delete("/:id",auth, (req, res) => {
     modelBook.findByPk(req.params.id)
         .then((deletedBook) => {
             if (deletedBook === null) {
@@ -103,7 +104,7 @@ booksRouter.delete("/:id", (req, res) => {
 
 //Put a book
 
-booksRouter.put("/:id", (req, res) => {
+booksRouter.put("/:id", auth,(req, res) => {
     const bookId = req.params.id;
     modelBook.update(req.body, { where: { id: bookId } })
         .then((_) => {

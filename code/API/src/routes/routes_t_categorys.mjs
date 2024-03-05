@@ -2,12 +2,13 @@ import express from "express";
 import { success } from "./helper.mjs";
 import { modelCategory } from "../db/sequelize.mjs";
 import { ValidationError, Op } from 'sequelize';
+import { auth } from "../auth/auth.mjs";
 
 const categorysRouter = express();
 
 ///// Get ALL categorys
 
-categorysRouter.get("/", (req, res) => {
+categorysRouter.get("/",auth, (req, res) => {
     if (req.query.category) {
         if (req.query.category.length < 2) {
             const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
@@ -39,7 +40,7 @@ categorysRouter.get("/", (req, res) => {
 
 //// Get one category by id
 
-categorysRouter.get("/:id", (req, res) => {
+categorysRouter.get("/:id", auth,(req, res) => {
     modelCategory.findByPk(req.params.id).then((category) => {
         if (category === null) {
             const message =
@@ -62,7 +63,7 @@ categorysRouter.get("/:id", (req, res) => {
 // curl -X POST http://localhost:3000/api/categorys -H "Content-Type: application/json" -d '{"name": "HamburgerVaudois","price": 9.99}'
 
 
-categorysRouter.post("/", (req, res) => {
+categorysRouter.post("/",auth, (req, res) => {
     modelCategory.create(req.body).then((createdCategory) => {
         const message = `La categorie [${createdCategory.category}] a bien été créé !`;
         res.json(success(message, createdCategory));
@@ -79,7 +80,7 @@ categorysRouter.post("/", (req, res) => {
 
 //// Delete a category
 //curl -X DELETE http://localhost:3000/api/categorys/1
-categorysRouter.delete("/:id", (req, res) => {
+categorysRouter.delete("/:id",auth, (req, res) => {
     modelCategory.findByPk(req.params.id)
         .then((deletedCategory) => {
             if (deletedCategory === null) {
@@ -103,7 +104,7 @@ categorysRouter.delete("/:id", (req, res) => {
 
 //Put a category
 
-categorysRouter.put("/:id", (req, res) => {
+categorysRouter.put("/:id", auth,(req, res) => {
     const categoryId = req.params.id;
     modelCategory.update(req.body, { where: { id: categoryId } })
         .then((_) => {
