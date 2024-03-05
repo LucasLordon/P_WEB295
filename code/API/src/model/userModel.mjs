@@ -9,6 +9,8 @@ const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        validate: {
+        },
       },
       pseudo: {
         type: DataTypes.STRING,

@@ -56,6 +56,10 @@ const BookModel = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            users_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
             page_count: {
                 type: DataTypes.INTEGER,
                 allowNull: false,

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { privateKey } from "./privateKey.mjs";
-
+///
 const auth = (req, res, next) => {
   const authorizationHeader = req.headers.authorization;
   if (!authorizationHeader) {
