@@ -30,45 +30,42 @@ const modelCategory = CategoryModel(sequelize, DataTypes);
 const modelComment = CommentModel(sequelize,DataTypes);
 
 modelCategory.hasMany(modelBook,{
+    sourceKey:"id",
     foreignKey: "categories_id",
 })
 
-modelBook.belongsTo(modelCategory, {
-    foreignKey: "categories_id",
-})
-
-
-// modelBook.hasMany(modelComment,{
-//     foreignKey: "books_id",
+// modelBook.belongsTo(modelCategory, {
+//     sourceKey:"id",
+//     foreignKey: "categories_id",
 // })
+
+
+modelBook.hasMany(modelComment,{
+    foreignKey: "books_id",
+})
 
 // modelComment.belongsTo(modelBook, {
+//     sourceKey:"id",
 //     foreignKey: "books_id",
 // })
 
-// UserTable.hasMany(modelBook,{
-//     foreignKey: "users_id",
-// })
+UserTable.hasMany(modelBook,{
+    foreignKey: "users_fk",
+})
 
 // modelBook.belongsTo(UserTable, {
-//     foreignKey: "users_id",
+//     sourceKey:"id",
+//     foreignKey: "users_fk",
 // })
 
-// UserTable.hasMany(modelComment,{
-//     foreignKey: "users_id",
-// })
-
-// modelComment.belongsTo(UserTable, {
-//     foreignKey: "users_id",
-// })
 
 let initDB = () =>{
     return sequelize
     .sync({force:true})
     .then((_) => {
         importCategory();
-        importBooks();
         importUser();
+        importBooks();
         importComment();
         console.log("la base de donnée db_librairie a bien été créé");
     });
@@ -77,12 +74,13 @@ let initDB = () =>{
 const importUser = () => {
     dataUsers.map((user) => {
         bcrypt
-        .hash(user.mot_de_passe,10)
-        .then((hash) => {
+        // .hash(user.mot_de_passe,10)
+        // .then((hash) => {
             UserTable.create({
                 pseudo : user.pseudo,
                 date_entree: user.date_entree,
-                mot_de_passe: hash
+                // mot_de_passe: hash
+                mot_de_passe: user.mot_de_passe
             }).then((user) => console.log(user.toJSON()));
         })
     });
@@ -96,7 +94,7 @@ const importBooks = () => {
             title: book.title,
             image: book.image,
             categories_id: book.categories_id,
-            users_id:book.users_id,
+            users_fk:book.users_fk,
             page_count: book.page_count,
             summary: book.summary
         }).then((book) => console.log(book.toJSON()));
