@@ -56,7 +56,7 @@ const BookModel = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            users_id: {
+            users_fk: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
