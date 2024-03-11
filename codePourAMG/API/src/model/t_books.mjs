@@ -1,8 +1,9 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/sequelize.mjs";
+import { CustomerModel } from "./t_customer.mjs";
 
 const BookModel = (sequelize, DataTypes) => {
-    return sequelize.define(
+    const Book = sequelize.define(
         "Book",
         {
             id: {
@@ -56,7 +57,7 @@ const BookModel = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            users_id: {
+            customers_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
@@ -87,13 +88,30 @@ const BookModel = (sequelize, DataTypes) => {
                     },
                 }
             },
+
         },
         {
             timestamps: true,
             createdAt: "created",
             updatedAt: false,
+
+            indexes: [
+                {
+                    unique: false,
+                    fields: ['customers_id']
+                }
+            ],
+
+            // foreignKey: {
+            //     name: 'customers_id', 
+            //     onUpdate: 'NO ACTION', 
+            //     onDelete:'NO ACTION',
+            // }
         }
-        
+
     );
+    // Book.belongsTo(CustomerModel, { foreignKey: 'customers_id' });
+
+    return Book;
 };
 export { BookModel };

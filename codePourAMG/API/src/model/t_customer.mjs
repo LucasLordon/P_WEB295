@@ -1,9 +1,9 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/sequelize.mjs";
 
-const UserModel = (sequelize, DataTypes) => {
+const CustomerModel = (sequelize, DataTypes) => {
   return sequelize.define(
-    "User",
+    "Customer",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -47,6 +47,7 @@ const UserModel = (sequelize, DataTypes) => {
         },
       },
     },
+    
     {
       timestamps: true,
       createdAt: "created",
@@ -54,4 +55,4 @@ const UserModel = (sequelize, DataTypes) => {
     }
   );
 };
-export { UserModel };
+export { CustomerModel };

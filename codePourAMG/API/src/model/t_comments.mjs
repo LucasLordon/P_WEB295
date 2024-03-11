@@ -25,7 +25,7 @@ const CommentModel = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            users_id: {
+            com_customers_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             }

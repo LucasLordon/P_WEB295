@@ -1,13 +1,13 @@
 import express from "express";
 import { success, getUniqueUserId } from "./helper.mjs";
-import { UserTable } from "../db/sequelize.mjs";
+import { modelCustomer } from "../db/sequelize.mjs";
 import { BaseError, Error, ValidationError, Op } from "sequelize";
 import { auth } from "../auth/auth.mjs";
 import bcrypt from "bcrypt";
 
-const usersRouter = express();
+const customerRouter = express();
 
-usersRouter.get("/", auth, (req, res) => {
+customerRouter.get("/", auth, (req, res) => {
   if (req.query.pseudo) {
     if (req.query.pseudo.length < 2) {
       const message = "Veuillez faire une recherche a plus de 1 caractère";
@@ -17,7 +17,7 @@ usersRouter.get("/", auth, (req, res) => {
     if (req.query.limit) {
       dynamicLimit = parseInt(req.query.limit);
     }
-    return UserTable.findAll({
+    return modelCustomer.findAll({
       where: { pseudo: { [Op.like]: `%${req.query.pseudo}%` } },
       order: ["pseudo"],
       limit: dynamicLimit,
@@ -26,7 +26,7 @@ usersRouter.get("/", auth, (req, res) => {
       res.json(success(message, usersList));
     });
   }
-  UserTable.findAll()
+  modelCustomer.findAll()
     .then((usersData) => {
       const message = "La liste des utilisateurs a bien été récupérée.";
       res.json(success(message, usersData));
@@ -37,8 +37,8 @@ usersRouter.get("/", auth, (req, res) => {
       res.status(500).json({ message, data: error });
     });
 });
-usersRouter.get("/:id", auth, (req, res) => {
-  UserTable.findByPk(req.params.id)
+customerRouter.get("/:id", auth, (req, res) => {
+  modelCustomer.findByPk(req.params.id)
     .then((usersData) => {
       const message = `L'utilisateur dont l'id vaut ${usersData.id} a bien été récupéré.`;
       res.json(success(message, usersData));
@@ -49,10 +49,10 @@ usersRouter.get("/:id", auth, (req, res) => {
     });
 });
 
-usersRouter.post("/", (req, res) => {
+customerRouter.post("/", (req, res) => {
   bcrypt.hash(req.body.mot_de_passe, 10).then((hashedPWD) => {
     req.body.mot_de_passe = hashedPWD;
-    UserTable.create(req.body)
+    modelCustomer.create(req.body)
       .then((userCreated) => {
         const message = `L'utilisateur ${userCreated.pseudo} à bien été créé`;
         res.json(success(message, userCreated));
@@ -64,16 +64,16 @@ usersRouter.post("/", (req, res) => {
   });
 });
 
-usersRouter.delete("/:id", auth, (req, res) => {
+customerRouter.delete("/:id", auth, (req, res) => {
   let deletedUser;
-  UserTable.findByPk(req.params.id)
+  modelCustomer.findByPk(req.params.id)
     .then((userDeleted) => {
       deletedUser = userDeleted;
       if (userDeleted == null) {
         const message = `L'utilisateur ${req.params.id} n'as pas été trouvé`;
         res.status(404).json({ message, data: error });
       }
-      return UserTable.destroy({
+      return modelCustomer.destroy({
         where: { id: userDeleted.id },
       });
     })
@@ -87,11 +87,11 @@ usersRouter.delete("/:id", auth, (req, res) => {
     });
 });
 
-usersRouter.put("/:id", auth, (req, res) => {
+customerRouter.put("/:id", auth, (req, res) => {
   let userID = req.params.id;
-  UserTable.update(req.body, { where: { id: userID } })
+  modelCustomer.update(req.body, { where: { id: userID } })
     .then((_) => {
-      return UserTable.findByPk(userID).then((userFinded) => {
+      return modelCustomer.findByPk(userID).then((userFinded) => {
         if (userFinded == null) {
           const message = `L'utilisateur ayant l'id ${userID} n'as pas pu être trouvé`;
           return res.status(404).json({ message });
@@ -108,4 +108,4 @@ usersRouter.put("/:id", auth, (req, res) => {
       res.status(500).json({ message, data: error });
     });
 });
-export { usersRouter };
+export { customerRouter };

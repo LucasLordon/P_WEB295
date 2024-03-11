@@ -1,12 +1,12 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { UserTable } from "../db/sequelize.mjs";
+import { modelCustomer } from "../db/sequelize.mjs";
 import { privateKey } from "../auth/privateKey.mjs";
 const loginRouter = express();
 //login
 loginRouter.post("/",(req,res) => {
-    UserTable.findOne({where : {pseudo: req.body.pseudo}})
+    modelCustomer.findOne({where : {pseudo: req.body.pseudo}})
     .then((user) => {
         if(!user){
             const message = "L'utilisateur demandé n'existe pas";

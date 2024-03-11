@@ -1,11 +1,11 @@
 import { DataTypes, Sequelize } from "sequelize";
 
-import { dataUsers } from "./mock-user.mjs";
+import { dataCustomers } from "./mock-customer.mjs";
 import { dataBooks } from "../db/mock-book.mjs";
 import { dataCategory } from "../db/mock-category.mjs";
 import { dataComment } from "./mock-comment.mjs";
 
-import { UserModel } from "../model/userModel.mjs";
+import { CustomerModel } from "../model/t_customer.mjs";
 import { BookModel } from "../model/t_books.mjs";
 import { CategoryModel } from "../model/t_categorys.mjs";
 import { CommentModel } from "../model/t_comments.mjs";
@@ -20,23 +20,23 @@ const sequelize = new Sequelize(
         host: "localhost",
         port: 6033,
         dialect : "mysql",
-        logging: false,
+        // logging: false,
+        logging: console.log,
     }
 );
 
-const UserTable = UserModel(sequelize,DataTypes);
+const modelCustomer = CustomerModel(sequelize,DataTypes);
 const modelBook = BookModel(sequelize, DataTypes);
 const modelCategory = CategoryModel(sequelize, DataTypes);
 const modelComment = CommentModel(sequelize,DataTypes);
 
-modelCategory.hasMany(modelBook,{
-    foreignKey: "categories_id",
-})
+// modelCategory.hasMany(modelBook,{
+//     foreignKey: "categories_id",
+// })
 
-modelBook.belongsTo(modelCategory, {
-    foreignKey: "categories_id",
-})
-
+// modelBook.belongsTo(modelCategory, {
+//     foreignKey: "categories_id",
+// })
 
 // modelBook.hasMany(modelComment,{
 //     foreignKey: "books_id",
@@ -46,44 +46,90 @@ modelBook.belongsTo(modelCategory, {
 //     foreignKey: "books_id",
 // })
 
-// UserTable.hasMany(modelBook,{
-//     foreignKey: "users_id",
+
+
+// modelCustomer.hasMany(modelComment,{
+//     foreignKey: "customers_id",
 // })
 
-// modelBook.belongsTo(UserTable, {
-//     foreignKey: "users_id",
-// })
-
-// UserTable.hasMany(modelComment,{
-//     foreignKey: "users_id",
-// })
-
-// modelComment.belongsTo(UserTable, {
-//     foreignKey: "users_id",
+// modelComment.belongsTo(modelCustomer, {
+//     foreignKey: "customers_id",
 // })
 
 let initDB = () =>{
+    createForeignKeys();
     return sequelize
     .sync({force:true})
     .then((_) => {
-        importCategory();
-        importBooks();
-        importUser();
-        importComment();
-        console.log("la base de donnée db_librairie a bien été créé");
+         importCustomer();
+         importCategory();
+         importBooks();
+         importComment();
+        console.log("La base de donnée db_librairie a bien été créé");
     });
 };
 
-const importUser = () => {
-    dataUsers.map((user) => {
+// let initDB = async () => {
+//     createForeignKeys();
+//     try {
+//         await sequelize.sync({ force: true });
+//         await importCustomer();
+//         await importCategory();
+//         await importBooks();
+//         await importComment();
+//         console.log("La base de donnée db_librairie a bien été créé");
+//     } catch (error) {
+//         console.error("Error initializing database:", error);
+//     }
+// };
+
+
+const createForeignKeys = () => {
+    // modelCustomer.hasMany(modelBook, {
+    //     foreignKey: "customers_id",
+    // });
+
+    /////////////////// Good relation ///////////////////
+
+                    // modelBook.belongsTo(modelCustomer, {
+                    //     foreignKey: "customers_id",
+                    // });
+
+                    // modelCustomer.hasMany(modelBook, {
+                    //     foreignKey: "customers_id",
+                    // });
+                    
+    /////////////////////////////////////////////////////
+    
+    modelCategory.hasMany(modelBook,{
+        foreignKey: "categories_id",
+    });
+    
+    modelBook.belongsTo(modelCategory, {
+        foreignKey: "categories_id",
+    });
+    
+    modelBook.hasMany(modelComment,{
+        foreignKey: "books_id",
+    });
+    
+    modelComment.belongsTo(modelBook, {
+        foreignKey: "books_id",
+    });
+};
+
+
+
+const importCustomer = () => {
+    dataCustomers.map((customer) => {
         bcrypt
-        .hash(user.mot_de_passe,10)
+        .hash(customer.mot_de_passe,10)
         .then((hash) => {
-            UserTable.create({
-                pseudo : user.pseudo,
-                date_entree: user.date_entree,
+            modelCustomer.create({
+                pseudo : customer.pseudo,
+                date_entree: customer.date_entree,
                 mot_de_passe: hash
-            }).then((user) => console.log(user.toJSON()));
+            }).then((customer) => console.log(customer.toJSON()));
         })
     });
 };
@@ -96,7 +142,7 @@ const importBooks = () => {
             title: book.title,
             image: book.image,
             categories_id: book.categories_id,
-            users_id:book.users_id,
+            customers_id:book.customers_id,
             page_count: book.page_count,
             summary: book.summary
         }).then((book) => console.log(book.toJSON()));
@@ -118,9 +164,9 @@ const importComment = () => {
         modelComment.create({
             comment: comment.comment,
             books_id:comment.books_id,
-            users_id:comment.users_id,
+            com_customers_id:comment.com_customers_id,
         }).then((comment) => console.log(comment.toJSON()));
     });
 };
 
-export {sequelize,initDB,UserTable,  modelBook, modelCategory,modelComment};
+export {sequelize,initDB,modelCustomer,  modelBook, modelCategory,modelComment};

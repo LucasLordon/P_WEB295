@@ -1,10 +1,4 @@
-let dataUsers = [
-  {
-    id: 0,
-    pseudo: "jeanLucRichman",
-    date_entree: new Date("2006-09-24"),
-    mot_de_passe: "jdedded",
-  },
+let dataCustomers = [
   {
     id: 1,
     pseudo: "alberZweiTime",
@@ -43,4 +37,4 @@ let dataUsers = [
   },
 ];
 
-export { dataUsers };
+export { dataCustomers };

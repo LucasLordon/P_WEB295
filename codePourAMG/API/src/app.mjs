@@ -2,7 +2,7 @@ import express from "express";
 
 import { initDB, sequelize } from "./db/sequelize.mjs";
 
-import { usersRouter } from "./routes/users.mjs";
+import { customerRouter } from "./routes/users.mjs";
 import { loginRouter } from "./routes/login.mjs";
 import { booksRouter } from "./routes/routes_t_books.mjs";
 import { categorysRouter } from "./routes/routes_t_categorys.mjs";
@@ -31,7 +31,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
 });
 
-app.use("/api/users", usersRouter);
+app.use("/api/users", customerRouter);
 app.use("/api/login",loginRouter);
 app.use("/api/books", booksRouter);
 app.use("/api/categorys", categorysRouter);
