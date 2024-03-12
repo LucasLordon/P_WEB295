@@ -1,6 +1,6 @@
 import express from "express";
 
-import { initDB, sequelize } from "./db/sequelize.mjs";
+import { initDB, sequelize} from "./db/sequelize.mjs";
 
 import { customerRouter } from "./routes/users.mjs";
 import { loginRouter } from "./routes/login.mjs";
