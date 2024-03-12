@@ -17,7 +17,7 @@ let dataBooks = [
         title: "Le Seigneur des Anneaux : La Communauté de l'Anneau",
         image: "https://media.senscritique.com/media/000006844185/source_big/Le_Seigneur_des_Anneaux_La_Communaute_de_l_anneau.jpg",
         categories_id: 2,
-        customers_id:2,
+        customers_id:1,
         page_count: 423,
         summary: "Frodon Sacquet entreprend un voyage périlleux pour détruire un anneau maléfique et sauver la Terre du Milieu."
     },
@@ -28,7 +28,7 @@ let dataBooks = [
         title: "Harry Potter à l'école des sorciers",
         image: "https://th.bing.com/th/id/OIP.TY4VTNCbLsWleOyoWQVA9QAAAA?rs=1&pid=ImgDetMain",
         categories_id: 2,
-        customers_id:3,
+        customers_id:1,
         page_count: 320,
         summary: "Harry Potter découvre qu'il est un sorcier et commence son apprentissage à Poudlard, une école de magie."
     },

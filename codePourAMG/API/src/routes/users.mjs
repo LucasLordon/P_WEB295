@@ -1,6 +1,7 @@
 import express from "express";
 import { success, getUniqueUserId } from "./helper.mjs";
-import { modelCustomer } from "../db/sequelize.mjs";
+import { modelBook, modelCustomer } from "../db/sequelize.mjs";
+import { BookModel } from "../model/t_books.mjs";
 import { BaseError, Error, ValidationError, Op } from "sequelize";
 import { auth } from "../auth/auth.mjs";
 import bcrypt from "bcrypt";
@@ -108,4 +109,36 @@ customerRouter.put("/:id", auth, (req, res) => {
       res.status(500).json({ message, data: error });
     });
 });
+
+// Route to get books by user ID
+customerRouter.get("/:id/books", auth, (req, res) => {
+  // Check if the user ID parameter exists in the request
+  if(req.params.id) {
+      // Find a record in the "User" table where the user ID matches
+      return modelCustomer.findOne({
+          where: { id: req.params.id },
+      }).then((user) => {
+          // If no record is found for the user ID, return a 404 error
+          if (user === null) {
+              const message = "L'utilisateur demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+              return res.status(404).json({ message });
+          }
+          // Find all books associated with the user ID
+          modelBook.findAll({
+              where: { customers_id: user.id },
+          }).then((books) => {
+              // If books are found, return them along with a success message
+              if(books.length !=0){
+                  const message = `Voici tout les livres de l'utilisateur "${user.usePseudo}"`;
+                  res.json(success(message, books));
+              }
+          });
+      }).catch((error) => {
+          // If there's an error in fetching data, return a 500 error
+          const message = "La liste des livres n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
+          res.status(500).json({ message, data: error });
+      })        
+  }
+});
+
 export { customerRouter };
