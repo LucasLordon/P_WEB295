@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../db/sequelize.mjs";
 
 const CustomerModel = (sequelize, DataTypes) => {
-  return sequelize.define(
+  const Customer = sequelize.define(
     "Customer",
     {
       id: {
@@ -54,5 +54,6 @@ const CustomerModel = (sequelize, DataTypes) => {
       updatedAt: false,
     }
   );
+  return Customer;
 };
 export { CustomerModel };

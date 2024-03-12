@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize } from "sequelize";
+import fs from "fs";
 
 import { dataCustomers } from "./mock-customer.mjs";
 import { dataBooks } from "../db/mock-book.mjs";
@@ -30,6 +31,18 @@ const modelBook = BookModel(sequelize, DataTypes);
 const modelCategory = CategoryModel(sequelize, DataTypes);
 const modelComment = CommentModel(sequelize,DataTypes);
 
+const executeForeignKeyScript = () => {
+    try {
+        // Lire le contenu du fichier fk_customer.sql
+        const scriptContent = fs.readFileSync("./src/db/sql_scripts/fk_customer.sql", "utf-8");
+        
+        // Exécuter le script SQL
+        return sequelize.query(scriptContent);
+    } catch (error) {
+        console.error("Error executing foreign key script:", error);
+        throw error; //  Propager l'erreur pour la gérer au niveau supérieur si nécessaire
+    }
+};
 // modelCategory.hasMany(modelBook,{
 //     foreignKey: "categories_id",
 // })
@@ -58,13 +71,15 @@ const modelComment = CommentModel(sequelize,DataTypes);
 
 let initDB = () =>{
     createForeignKeys();
+    
     return sequelize
     .sync({force:true})
     .then((_) => {
-         importCustomer();
-         importCategory();
-         importBooks();
-         importComment();
+        importCustomer();
+        importCategory();
+        importBooks();
+        importComment();
+        // executeForeignKeyScript();
         console.log("La base de donnée db_librairie a bien été créé");
     });
 };
@@ -77,7 +92,7 @@ let initDB = () =>{
 //         await importCategory();
 //         await importBooks();
 //         await importComment();
-//         console.log("La base de donnée db_librairie a bien été créé");
+//         console.log("La base de donnée db_librairie a bien été créé.");
 //     } catch (error) {
 //         console.error("Error initializing database:", error);
 //     }
@@ -168,5 +183,7 @@ const importComment = () => {
         }).then((comment) => console.log(comment.toJSON()));
     });
 };
+
+//function executeForeignKeyScript
 
 export {sequelize,initDB,modelCustomer,  modelBook, modelCategory,modelComment};

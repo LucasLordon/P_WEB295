@@ -1,6 +1,5 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../db/sequelize.mjs";
-import { CustomerModel } from "./t_customer.mjs";
+// import { Sequelize } from "sequelize";
+// import { CustomerModel } from "./t_customer.mjs";
 
 const BookModel = (sequelize, DataTypes) => {
     const Book = sequelize.define(
@@ -10,8 +9,7 @@ const BookModel = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
-                validate: {
-                }
+                validate: {}
             },
             price: {
                 type: DataTypes.FLOAT,
@@ -101,17 +99,12 @@ const BookModel = (sequelize, DataTypes) => {
                     fields: ['customers_id']
                 }
             ],
-
-            // foreignKey: {
-            //     name: 'customers_id', 
-            //     onUpdate: 'NO ACTION', 
-            //     onDelete:'NO ACTION',
-            // }
         }
-
     );
+
     // Book.belongsTo(CustomerModel, { foreignKey: 'customers_id' });
 
     return Book;
 };
+
 export { BookModel };
