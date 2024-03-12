@@ -70,18 +70,21 @@ const executeForeignKeyScript = () => {
 // })
 
 let initDB = () =>{
+    maaarche();
     createForeignKeys();
     
     return sequelize
     .sync({force:true})
     .then((_) => {
-        importCustomer();
         importCategory();
+        importCustomer();
         importBooks();
         importComment();
         // executeForeignKeyScript();
         console.log("La base de donnée db_librairie a bien été créé");
+        
     });
+    
 };
 
 // let initDB = async () => {
@@ -104,17 +107,7 @@ const createForeignKeys = () => {
     //     foreignKey: "customers_id",
     // });
 
-    /////////////////// Good relation ///////////////////
-
-                    // modelBook.belongsTo(modelCustomer, {
-                    //     foreignKey: "customers_id",
-                    // });
-
-                    // modelCustomer.hasMany(modelBook, {
-                    //     foreignKey: "customers_id",
-                    // });
-                    
-    /////////////////////////////////////////////////////
+    
     
     modelCategory.hasMany(modelBook,{
         foreignKey: "categories_id",
@@ -131,8 +124,22 @@ const createForeignKeys = () => {
     modelComment.belongsTo(modelBook, {
         foreignKey: "books_id",
     });
-};
 
+
+};
+const maaarche = () => {
+        /////////////////// Good relation ///////////////////
+        console.log("vfuwegbvwuegvwuevgbbvwevebvwuebvmaaaaaaaaaaaaaaaaaaaarche1");
+        console.log("vfuwegbvwuegvwuevgbbvwevebvwuebvmaaaaaaaaaaaaaaaaaaaarche2");
+        modelBook.belongsTo(modelCustomer, {
+            foreignKey: "customers_id",
+        });
+        modelCustomer.hasMany(modelBook, {
+            foreignKey: "customers_id",
+        });
+        console.log("vfuwegbvwuegvwuevgbbvwevebvwuebvmaaaaaaaaaaaaaaaaaaaarche3");
+    /////////////////////////////////////////////////////
+}
 
 
 const importCustomer = () => {
@@ -141,6 +148,7 @@ const importCustomer = () => {
         .hash(customer.mot_de_passe,10)
         .then((hash) => {
             modelCustomer.create({
+                id: 1/*customer.id*/,
                 pseudo : customer.pseudo,
                 date_entree: customer.date_entree,
                 mot_de_passe: hash

@@ -57,7 +57,7 @@ const BookModel = (sequelize, DataTypes) => {
             },
             customers_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             page_count: {
                 type: DataTypes.INTEGER,
@@ -93,12 +93,12 @@ const BookModel = (sequelize, DataTypes) => {
             createdAt: "created",
             updatedAt: false,
 
-            indexes: [
+           /* indexes: [
                 {
                     unique: false,
                     fields: ['customers_id']
                 }
-            ],
+            ],*/
         }
     );
 

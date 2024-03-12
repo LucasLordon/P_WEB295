@@ -3,7 +3,7 @@ import { sequelize } from "../db/sequelize.mjs";
 
 const CustomerModel = (sequelize, DataTypes) => {
   const Customer = sequelize.define(
-    "Customer",
+    "Customers",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -15,6 +15,7 @@ const CustomerModel = (sequelize, DataTypes) => {
       pseudo: {
         type: DataTypes.STRING,
         allowNull: false,
+        primaryKey: false,
         unique: { msg: "Ce username est déjà pris." },
         validate: {
           isAlphanumeric: {
