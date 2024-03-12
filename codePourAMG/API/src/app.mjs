@@ -7,6 +7,7 @@ import { loginRouter } from "./routes/login.mjs";
 import { booksRouter } from "./routes/routes_t_books.mjs";
 import { categorysRouter } from "./routes/routes_t_categorys.mjs";
 import { commentsRouter } from "./routes/routes_t_comments.mjs";
+import { authorRouter } from "./routes/routes_t_authors.mjs";
 
 const app = express();
 app.use(express.json());
@@ -34,8 +35,9 @@ app.listen(port, () => {
 app.use("/api/users", customerRouter);
 app.use("/api/login",loginRouter);
 app.use("/api/books", booksRouter);
-app.use("/api/categorys", categorysRouter);
+app.use("/api/categories", categorysRouter);
 app.use("/api/comments", commentsRouter);
+app.use("/api/authors", authorRouter);
 
 app.use(({res}) => {
   const message = "Impossible de trouver la ressource demandée ! Veuillez essayer une autre URL";

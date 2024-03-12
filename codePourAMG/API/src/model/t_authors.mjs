@@ -1,6 +1,6 @@
-const CommentModel = (sequelize, DataTypes) => {
+const Authormodel = (sequelize, DataTypes) => {
     return sequelize.define(
-        "Comment",
+        "Author",
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -9,23 +9,31 @@ const CommentModel = (sequelize, DataTypes) => {
                 validate: {
                 }
             },
-            comment: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 validate: {
                     notEmpty: {
-                        msg: "Le comment ne peut pas être vide.",
+                        msg: "Le name ne peut pas être vide.",
                     },
                     notNull: {
-                        msg: "Le comment est une propriété obligatoire.",
+                        msg: "Le name est une propriété obligatoire.",
+                    },
+                }
+            },
+            firstName: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: {
+                        msg: "Le firstName ne peut pas être vide.",
+                    },
+                    notNull: {
+                        msg: "Le firstName est une propriété obligatoire.",
                     },
                 }
             },
             books_id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
-            com_customers_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             }
@@ -37,4 +45,4 @@ const CommentModel = (sequelize, DataTypes) => {
         }
     );
 };
-export { CommentModel };
+export { Authormodel };

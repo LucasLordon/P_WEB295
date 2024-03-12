@@ -39,29 +39,37 @@ categorysRouter.get("/",auth, (req, res) => {
         });
 });
 
-categorysRouter.get("/booksCategorys", (req, res) => {
-    if(req.query.category) {
-        return modelCategory.findOne({
-            where: { category: { [Op.like]: `%${req.query.category}%` } },
-        }).then((categorieFinded) => {
-            modelBook.findAll({
-                where: { categories_id: { [Op.eq]: categorieFinded.id } },
-            }).then((books) => {
-                if(categorieFinded.id !== null){
-                    const message = `Voici tout les livre ayant comme catégorie ${req.query.category}`;
-                    res.json(success(message, books));
-                    console.log(categorieFinded.id);
-                }
-                else{
-                    return
-                } 
-            });
-        }).catch((error) => {
-            const message = "La liste des categories n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
-            res.status(500).json({ message, data: error });
-        })        
-    }
-});
+categorysRouter.get("/:id/books/", auth, async (req, res) => {
+ 
+  modelCategory.findByPk(req.params.id)
+      .then((category) => {
+        if (category === null) {
+          const message =
+            "La categorie demandée n'existe pas. Merci de réessayer avec un autre identifiant.";
+          return res.status(404).json({ message });
+        }
+   return modelBook.findAndCountAll({
+          where: {
+            categories_id: category.id,
+          },
+          order: ["title"],
+        }).then((modelBook) => {
+          let message;
+          if (modelBook.count === 0) {
+            message = `Il n'y a pas de livres pour la catégorie dont l'id vaut ${category.id}.`;
+          } else {
+            message = `La liste des livres de la catégorie dont l'id vaut ${category.id} a bien été récupérée.`;
+          }
+          res.json({ message, data: modelBook});
+        });
+      })
+      .catch((error) => {
+        const message =
+        "La liste des livres de la catégorie n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
+      res.status(500).json({ message, data: error });
+      });
+  });
+
 
 //// Get one category by id
 

@@ -110,35 +110,50 @@ customerRouter.put("/:id", auth, (req, res) => {
     });
 });
 
-// Route to get books by user ID
+//Merci à Ethan pour la logique de ce code (ne pas utiliser les relation) :
+
+// Route pour obtenir les livres par ID utilisateur
 customerRouter.get("/:id/books", auth, (req, res) => {
-  // Check if the user ID parameter exists in the request
+  // Vérifier si le paramètre ID utilisateur existe dans la requête
   if(req.params.id) {
-      // Find a record in the "User" table where the user ID matches
+      // Trouver un enregistrement dans la table "User" où l'ID utilisateur correspond
       return modelCustomer.findOne({
           where: { id: req.params.id },
       }).then((user) => {
-          // If no record is found for the user ID, return a 404 error
-          if (user === null) {
-              const message = "L'utilisateur demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+          // Si aucun enregistrement n'est trouvé pour l'ID utilisateur, renvoyer une erreur 404
+          if (!user) {
+              const message = "Utilisateur non trouvé. Veuillez vérifier l'identifiant et réessayer.";
               return res.status(404).json({ message });
           }
-          // Find all books associated with the user ID
-          modelBook.findAll({
+          // Trouver tous les livres associés à l'ID utilisateur
+          return modelBook.findAll({
               where: { customers_id: user.id },
           }).then((books) => {
-              // If books are found, return them along with a success message
-              if(books.length !=0){
-                  const message = `Voici tout les livres de l'utilisateur "${user.usePseudo}"`;
-                  res.json(success(message, books));
+              // Si des livres sont trouvés, les renvoyer avec un message de succès
+              if(books.length !== 0){
+                  const message = `Voici tous les livres de l'utilisateur avec l'identifiant "${user.id}".`;
+                  res.json({ message, books });
+              } else {
+                  // Si aucun livre n'est associé à l'utilisateur, renvoyer un message approprié
+                  const message = `L'utilisateur avec l'identifiant "${user.id}" n'a aucun livre associé.`;
+                  res.json({ message });
               }
+          }).catch((error) => {
+              // S'il y a une erreur lors de la récupération des livres, renvoyer une erreur 500
+              const message = "La liste des livres n'a pas pu être récupérée. Veuillez réessayer dans quelques instants.";
+              res.status(500).json({ message, data: error });
           });
       }).catch((error) => {
-          // If there's an error in fetching data, return a 500 error
-          const message = "La liste des livres n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
+          // S'il y a une erreur lors de la récupération de l'utilisateur, renvoyer une erreur 500
+          const message = "Une erreur s'est produite lors de la récupération de l'utilisateur. Veuillez réessayer dans quelques instants.";
           res.status(500).json({ message, data: error });
-      })        
+      });        
+  } else {
+      // Si aucun ID utilisateur n'est fourni dans la requête, renvoyer une erreur 400
+      const message = "Veuillez fournir un identifiant d'utilisateur valide.";
+      res.status(400).json({ message });
   }
 });
+
 
 export { customerRouter };

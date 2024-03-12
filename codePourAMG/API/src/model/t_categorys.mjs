@@ -1,5 +1,3 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../db/sequelize.mjs";
 const CategoryModel = (sequelize, DataTypes) => {
     return sequelize.define(
         "Category",

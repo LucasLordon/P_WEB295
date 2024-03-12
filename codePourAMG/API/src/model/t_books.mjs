@@ -1,6 +1,3 @@
-// import { Sequelize } from "sequelize";
-// import { CustomerModel } from "./t_customer.mjs";
-
 const BookModel = (sequelize, DataTypes) => {
     const Book = sequelize.define(
         "Book",
@@ -59,6 +56,10 @@ const BookModel = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            authors_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
             page_count: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -93,6 +94,7 @@ const BookModel = (sequelize, DataTypes) => {
             createdAt: "created",
             updatedAt: false,
 
+            //Permet le debug en créeant la fk manuellement dans phpmyadmin
             indexes: [
                 {
                     unique: false,
@@ -101,8 +103,6 @@ const BookModel = (sequelize, DataTypes) => {
             ],
         }
     );
-
-    // Book.belongsTo(CustomerModel, { foreignKey: 'customers_id' });
 
     return Book;
 };
