@@ -1,0 +1,99 @@
+/* -----------------------   Header [start]   ----------------------- */
+header{
+    overflow: hidden;/* Cache si le header dépasse */
+    background-color: #1B3764; /*Couleur de font*/
+    padding: 20px 10px; /*Espace à l'intérieur*/
+}
+
+/* Style des éléments du header */
+header a,header img {
+    float: left; /*aligne les élément à gauche par défault (même ligne)*/
+    color: #FFFFFF;
+    padding: 18px; /*espaces entre les élément*/
+    text-decoration: none; /*enlève le trai des lien*/
+    font-size: 18px;/*taille du text*/
+    line-height: 25px;/*espace en haut*/
+    border-radius: 4px;/*arondis les bort utiles lors du hover*/
+}
+
+/*Style du titre de la page*/
+header a.activePage {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+header img.logo{
+    width: 50px;
+    line-height: 0px;
+    padding: 9px;
+}
+
+/* change le style quand la souris passe */
+header a:hover {
+    background-color: #FFCA42;
+    color: black;
+}
+
+.header-right {
+    float: right;
+}
+
+@media screen and (max-width: 555px) {
+    header a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+    .header-right {
+      float: none;
+    }
+    header img.logo{
+        padding: 9px;
+        line: height 25px;
+    }
+    
+}
+
+/* -----------------------   Header [end]   ----------------------- */
+
+
+/* -----------------------   randomBook.book [start]   ----------------------- */
+
+
+/* -----------------------   randomBook.book [end]   ----------------------- */
+
+
+/* -----------------------   Footer [start]   ----------------------- */
+
+footer {
+    background-color: #1B3764;
+    color: #fff;
+    padding: 20px 0;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.column {
+    flex: 1;
+    padding: 0 20px;
+}
+.column h2 {
+    font-size: 18px;
+    color: #FFCA42;
+}
+.column ul {
+    list-style-type: none;
+    padding: 0;
+}
+.column ul li {
+    margin-bottom: 10px;
+}
+.column a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* -----------------------   Footer [end]   ----------------------- */
