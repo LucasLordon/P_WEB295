@@ -25,6 +25,14 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style>
 
+/* -----------------------   Global [start]   ----------------------- */
+
+body{
+    margin: 0;
+}
+
+/* -----------------------   Global [end]   ----------------------- */
+
 /* -----------------------   Header [start]   ----------------------- */
 header {
     overflow: hidden;

@@ -1,4 +1,7 @@
 /* -----------------------   Header [start]   ----------------------- */
+body{
+    margin: 0;
+}
 header{
     overflow: hidden;/* Cache si le header dépasse */
     background-color: #1B3764; /*Couleur de font*/
@@ -59,6 +62,39 @@ header a:hover {
 
 /* -----------------------   randomBook.book [start]   ----------------------- */
 
+ #book {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    max-width: 1200px;
+}
+
+.book-left {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.book-left .info-line {
+    display: flex;
+}
+
+.book-left .info-line h3 {
+    margin-right: 20px; /* Espacement entre les éléments */
+}
+
+.book-right {
+    display: flex;
+
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.book-right img {
+    width: 60%;
+} 
 
 /* -----------------------   randomBook.book [end]   ----------------------- */
 
