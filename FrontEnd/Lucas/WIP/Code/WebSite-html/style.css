@@ -3,23 +3,20 @@ body{
     margin: 0;
 }
 header{
-    overflow: hidden;/* Cache si le header dépasse */
-    background-color: #1B3764; /*Couleur de font*/
-    padding: 20px 10px; /*Espace à l'intérieur*/
+    overflow: hidden;
+    background-color: #1B3764; 
+    padding: 20px 10px; 
 }
 
-/* Style des éléments du header */
 header a,header img {
-    float: left; /*aligne les élément à gauche par défault (même ligne)*/
-    color: #FFFFFF;
-    padding: 18px; /*espaces entre les élément*/
-    text-decoration: none; /*enlève le trai des lien*/
-    font-size: 18px;/*taille du text*/
-    line-height: 25px;/*espace en haut*/
-    border-radius: 4px;/*arondis les bort utiles lors du hover*/
+    float: left;
+    padding: 18px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 4px;
 }
 
-/*Style du titre de la page*/
 header a.activePage {
     font-size: 25px;
     font-weight: bold;
@@ -31,7 +28,6 @@ header img.logo{
     padding: 9px;
 }
 
-/* change le style quand la souris passe */
 header a:hover {
     background-color: #FFCA42;
     color: black;
@@ -40,6 +36,7 @@ header a:hover {
 .header-right {
     float: right;
 }
+
 
 @media screen and (max-width: 555px) {
     header a {
@@ -63,11 +60,13 @@ header a:hover {
 /* -----------------------   randomBook.book [start]   ----------------------- */
 
  #book {
+
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
     margin-bottom: 30px;
     max-width: 1200px;
+    margin-inline: auto;
 }
 
 .book-left {
@@ -82,13 +81,12 @@ header a:hover {
 }
 
 .book-left .info-line h3 {
-    margin-right: 20px; /* Espacement entre les éléments */
+    margin-right: 20px;
 }
 
 .book-right {
     display: flex;
-
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
 }
 
@@ -98,6 +96,143 @@ header a:hover {
 
 /* -----------------------   randomBook.book [end]   ----------------------- */
 
+/* -----------------------   randomBook.author [start]   ----------------------- */
+
+#author {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+.author-right {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.author-right .info-line {
+    display: flex;
+}
+
+.author-left {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.author-left img {
+    width: 60%;
+}
+
+.author-right .info-line {
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.author-right .info-item h3 {
+    font-size: 2rem;
+    color: #446688;
+    margin-bottom: 5px;
+}
+
+.author-right .info-item p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.author-right .info-item:not(:last-child) {
+    margin-right: 20px;
+    border-right: 3px solid #FFCA42;
+}
+
+
+.author-btn {
+    background-color: #FFCA42;
+    color: #446688;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.author-btn:hover {
+    background-color: #334d66;
+    color: #FFCA42;
+}
+
+/* -----------------------   randomBook.author [end]   ----------------------- */
+
+/* -----------------------   randomBook.comment [start]   ----------------------- */
+
+#comments {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+#comments .info-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#comments .info-item:not(:last-child) {
+    width: 50%;
+    border-bottom: 1px solid #ccc;
+}
+
+#comments .info-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+#comments .info-item h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#comments .info-item h2 {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+#comments .info-item p {
+    font-size: 14px;
+    color: #999;
+}
+
+#comments .comment-btn {
+    background-color: #FFCA42;
+    color: #446688;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#comments .comment-btn:hover {
+    background-color: #334d66;
+    color: #FFCA42;
+}
+
+
+/* -----------------------   randomBook.comment [end]   ----------------------- */
 
 /* -----------------------   Footer [start]   ----------------------- */
 
