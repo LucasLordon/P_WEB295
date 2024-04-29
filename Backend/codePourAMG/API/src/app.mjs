@@ -8,9 +8,11 @@ import { booksRouter } from "./routes/routes_t_books.mjs";
 import { categorysRouter } from "./routes/routes_t_categorys.mjs";
 import { commentsRouter } from "./routes/routes_t_comments.mjs";
 import { authorRouter } from "./routes/routes_t_authors.mjs";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const port = 3000;
 
  sequelize

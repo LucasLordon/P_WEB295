@@ -10,7 +10,7 @@ const booksRouter = express();
 
 ///// Get ALL books
 
-booksRouter.get("/", auth, (req, res) => {
+booksRouter.get("/",  (req, res) => {
     if (req.query.title) {
         if (req.query.title.length < 2) {
             const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
