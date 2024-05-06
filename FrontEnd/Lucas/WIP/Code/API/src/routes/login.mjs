@@ -20,7 +20,7 @@ loginRouter.post("/",(req,res) => {
                     return res.status(401).json({message});
                 }
                 else{
-                    //jwt
+                    //jwt 
                     const token = jwt.sign({id: user.id}, privateKey, {
                         expiresIn: "1y",
                     });
