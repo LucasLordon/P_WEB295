@@ -11,9 +11,9 @@ import { RouterLink, RouterView } from 'vue-router'
               <a class="activePage">Home</a>
               <div class="header-right">
                 <RouterLink class="activePage" to="/">Home</RouterLink>
-                <RouterLink to="/pages">Pages</RouterLink>
+                <!--<RouterLink to="/pages">Pages</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
-                <RouterLink to="/contact">Contact</RouterLink>
+                <RouterLink to="/contact">Contact</RouterLink>-->
               </div>
           </nav>
       </div>
@@ -83,7 +83,6 @@ header .header-right :hover {
     }
     header img.logo{
         padding: 9px;
-        line: height 25px;
     }
     
 }
