@@ -49,12 +49,15 @@ export default{
             mot_de_passe: this.passWord,
 	          date_entree: new Date()
           })
-          .then(function (response) {
+          .then((response) => {
             console.log(response.data);
+            alert(`Votre utilisateur à été créer`);
 
           })
-          .catch(function (error){
+          .catch((error) => {
             console.error(error);
+            const errorMessage = error.response.data.data.errors[0].message;
+            alert(errorMessage);
           })
       }
       

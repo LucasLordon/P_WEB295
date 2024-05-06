@@ -11,7 +11,7 @@ import CreateAccount from './components/CreateAccount.vue'
               <a class="activePage">Create Account</a>
               <div class="header-right">
                 <RouterLink class="activePage" to="/">Home</RouterLink>
-                <RouterLink to="/pages">Pages</RouterLink>
+                <RouterLink to="/publishBooks">Publier un livre</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
                 <RouterLink to="/contact">Contact</RouterLink>
               </div>
