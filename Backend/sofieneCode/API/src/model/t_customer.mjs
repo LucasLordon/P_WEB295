@@ -1,14 +1,13 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../db/sequelize.mjs";
-
-const UserModel = (sequelize, DataTypes) => {
-  return sequelize.define(
-    "User",
+const CustomerModel = (sequelize, DataTypes) => {
+  const Customer = sequelize.define(
+    "Customer",
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        validate: {
+        },
       },
       pseudo: {
         type: DataTypes.STRING,
@@ -30,6 +29,7 @@ const UserModel = (sequelize, DataTypes) => {
       date_entree: {
         type: DataTypes.DATE,
         allowNull: false,
+
       },
       mot_de_passe: {
         type: DataTypes.STRING,
@@ -44,11 +44,13 @@ const UserModel = (sequelize, DataTypes) => {
         },
       },
     },
+    
     {
       timestamps: true,
       createdAt: "created",
       updatedAt: false,
     }
   );
+  return Customer;
 };
-export { UserModel };
+export { CustomerModel };
