@@ -13,7 +13,7 @@ import CreateAccount from './components/CreateAccount.vue'
                 <RouterLink class="activePage" to="/">Home</RouterLink>
                 <RouterLink to="/publishBooks">Publier un livre</RouterLink>
                 <RouterLink to="/about">About</RouterLink>
-                <RouterLink to="/contact">Contact</RouterLink>
+                <RouterLink to="/DetailOfBooks">Details Livre</RouterLink>
               </div>
           </nav>
     </div>

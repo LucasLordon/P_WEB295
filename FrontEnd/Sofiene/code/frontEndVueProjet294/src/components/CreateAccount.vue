@@ -1,5 +1,6 @@
 <template>
   <div class="greetings">
+    <h1>Créer un compte</h1>
     <form class="CreateAccountForm" @submit.prevent="createTheAccount">
       <label for="pseudo">Pseudo :</label>
       <input id="pseudo" v-model="pseudo">

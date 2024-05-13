@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <h1>Se connecter</h1>
     <form class="CreateAccountForm" @submit.prevent="loginToWebSite">
       <label for="pseudo">Pseudo :</label>
       <input id="pseudo" v-model="pseudo">

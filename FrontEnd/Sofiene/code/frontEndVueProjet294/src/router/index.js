@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CreateAccount from '../components/CreateAccount.vue'
-import PublishABook from '../views/PublishABook.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,7 +21,12 @@ const router = createRouter({
     {
       path: '/publishBooks',
       name: 'PublishABook',
-      component: PublishABook
+      component: ()=> import('../views/PublishABook.vue')
+    },
+    {
+      path: '/DetailOfBooks',
+      name: 'DetailOfBooks',
+      component: ()=> import('../components/DetailOfBooks.vue')
     }
   ]
 })
