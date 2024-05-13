@@ -1,14 +1,19 @@
 <script setup>
-
+defineProps({
+    author: {
+    type: Object,
+    required: true,
+  },
+})
 </script>
 
 <template>
     <div id="author">
             <div class="author-left">
-                <img src="../../assets/images/Books/cantHurtMe/authorCover.jpg" alt="Book of the day cover">
+                <img src="../../assets/images/Books/cantHurtMe/authorCover.jpg" alt="Author of the day">
             </div>
             <div class="author-right">
-                <h1>About David Goggins</h1>
+                <h1>About {{ author.data.name }} {{ author.data.firstName }}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <div class="info-line">
                     <div class="info-item">

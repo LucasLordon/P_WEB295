@@ -2,8 +2,8 @@ let dataAuthor = [
     {
         id: 1,
         created: new Date(),
-        name: "Orwell",
-        firstName: "George",
+        name: "David",
+        firstName: "Gogins",
         books_id:1
     },
     {
