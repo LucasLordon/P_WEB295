@@ -1,85 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style-books.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style-books.css">
+  <title>Document</title>
 </head>
+
 <body>
-    <header>
-        <img class="logo" src="../asset/images/logo.png" alt="logo">
-        <a class="activePage">Home</a>
-        <div class="header-right">
-            <a class="activePage" href="#home">Home</a>
-            <a href="#pages">Pages</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+  <header>
+    <img class="logo" src="../asset/images/logo.png" alt="logo">
+    <a class="activePage">Home</a>
+    <div class="header-right">
+      <a class="activePage" href="#home">Home</a>
+      <div class="dropdown">
+        <button class="dropbtn">Categories</button>
+        <div class="dropdown-content">
+          <a href="#pages">Shearch book</a>
         </div>
-    </header>
-    <div id="Search-book">
-        <Search-bar>
-          <div class="Search-list">
-                      <input type="search" placeholder="Find a book">
-                      <div class="dropdown">
-                        <button class="dropbtn">Categories</button>
-                        <div class="dropdown-content">
-                          <a href="#">Link 1</a>
-                          <a href="#">Link 2</a>
-                          <a href="#">Link 3</a>
-                        </div>
-                      </div>
-                      <div class="dropdown">
-                        <button class="dropbtn">Rating</button>
-                        <div class="dropdown-content">
-                          <div class="wrapper">
-                            <div class="values">
-                                <span id="range1">
-                                    0
-                                </span>
-                                <span> &dash; </span>
-                                <span id="range2">
-                                    5
-                                </span>
-                            </div>
-                            <div class="container">
-                                <div class="slider-track"></div>
-                                <input type="range" min="0" max="5" value="0" id="slider-1" oninput="slideOne()">
-                                <input type="range" min="0" max="5" value="5" id="slider-2" oninput="slideTwo()">
-                            </div>
-                        </div>
-                        </div>
-                      </div>
+      </div>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+  <div id="Search-book">
+    <Search-bar>
+      <div class="Search-list">
+        <input type="search" placeholder="Find a book">
+        <div class="dropdown">
+          <button class="dropbtn">Categories</button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
           </div>
-        </Search-bar>
-        <Search-result>
-          <div class="book-list">
-            <div class="book" href="#pages">
-                <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-                <div class="book-info">
-                  <h2>THE LAST FOUR THINGS</h2>
-                  <p>Educated A MEMOIR</p>
-                  <p>Significant reading has more info number</p>
-                  <p>Author - 23.05.2022</p>
-                </div>
-            </div>
-            <div class="book">
-              <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-              <div class="book-info">
-                <h2>THE LAST FOUR THINGS</h2>
-                <p>Educated A MEMOIR</p>
-                <p>Significant reading has more info number</p>
-                <p>Author - 23.05.2022</p>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">Rating</button>
+          <div class="dropdown-content">
+            <div class="wrapper">
+              <div class="values">
+                <span id="range1">
+                  0
+                </span>
+                <span> &dash; </span>
+                <span id="range2">
+                  5
+                </span>
               </div>
-          </div>
-          <div class="book">
-            <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-            <div class="book-info">
-              <h2>THE LAST FOUR THINGS</h2>
-              <p>Educated A MEMOIR</p>
-              <p>Significant reading has more info number</p>
-              <p>Author - 23.05.2022</p>
+              <div class="container">
+                <div class="slider-track"></div>
+                <input type="range" min="0" max="5" value="0" id="slider-1" oninput="slideOne()">
+                <input type="range" min="0" max="5" value="5" id="slider-2" oninput="slideTwo()">
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </Search-bar>
+    <Search-result>
+      <div class="book-list">
+        <div class="book" href="#pages">
+          <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
+          <div class="book-info">
+            <h2>THE LAST FOUR THINGS</h2>
+            <p>Educated A MEMOIR</p>
+            <p>Significant reading has more info number</p>
+            <p>Author - 23.05.2022</p>
+          </div>
         </div>
         <div class="book">
           <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
@@ -89,103 +78,76 @@
             <p>Significant reading has more info number</p>
             <p>Author - 23.05.2022</p>
           </div>
-      </div>
-            <div class="book">
-                <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-                <div class="book-info">
-                  <h2>THE LAST FOUR THINGS</h2>
-                  <p>Educated A MEMOIR</p>
-                  <p>Significant reading has more info number</p>
-                  <p>Author - 23.05.2022</p>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-                <div class="book-info">
-                  <h2>THE LAST FOUR THINGS</h2>
-                  <p>Educated A MEMOIR</p>
-                  <p>Significant reading has more info number</p>
-                  <p>Author - 23.05.2022</p>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-                <div class="book-info">
-                  <h2>THE LAST FOUR THINGS</h2>
-                  <p>Educated A MEMOIR</p>
-                  <p>Significant reading has more info number</p>
-                  <p>Author - 23.05.2022</p>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-                <div class="book-info">
-                  <h2>THE LAST FOUR THINGS</h2>
-                  <p>Educated A MEMOIR</p>
-                  <p>Significant reading has more info number</p>
-                  <p>Author - 23.05.2022</p>
-                </div>
-            </div>
-            <div class="book">
-                <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-                <div class="book-info">
-                  <h2>THE LAST FOUR THINGS</h2>
-                  <p>Educated A MEMOIR</p>
-                  <p>Significant reading has more info number</p>
-                  <p>Author - 23.05.2022</p>
-                </div>
-            </div>
-                        <div class="book">
-                <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
-                <div class="book-info">
-                  <h2>THE LAST FOUR THINGS</h2>
-                  <p>Educated A MEMOIR</p>
-                  <p>Significant reading has more info number</p>
-                  <p>Author - 23.05.2022</p>
-                </div>
-            </div>
-
-            <!-- Add more books here -->
-          </div>
-        </Search-result>
-    </div>
-    <footer>
-        <div class="container">
-            <div class="column">
-                <h2>What is "API Book"?</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </p>
-            </div>
-            <div class="column">
-                <h2>Explore</h2>
-                <ul>
-                    <li><a href="#">Randoms book</a></li>
-                    <li><a href="#">Randoms autor</a></li>
-                    <li><a href="#">Randoms comment</a></li>
-                    <li><a href="#">Best ratings book</a></li>
-                    <li><a href="#">Best ratings autor</a></li>
-                </ul>
-            </div>
-            <div class="column">
-                <h2>Usefull</h2>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Log out</a></li>
-                    <li><a href="#">Search book</a></li>
-                </ul>
-            </div>
-            <div class="column">
-                <h2>Contact Info</h2>
-                <p>Address: Av. Recordon 1bis, 1004 Lausanne, Switzerland</p>
-                <p>Phone: +123456789</p>
-                <p>Email: api.book@etml.ch</p>
-            </div>
         </div>
-    </footer>
-    <script src="../test.js"></script>
+        <div class="book">
+          <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
+          <div class="book-info">
+            <h2>THE LAST FOUR THINGS</h2>
+            <p>Educated A MEMOIR</p>
+            <p>Significant reading has more info number</p>
+            <p>Author - 23.05.2022</p>
+          </div>
+        </div>
+        <div class="book">
+          <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
+          <div class="book-info">
+            <h2>THE LAST FOUR THINGS</h2>
+            <p>Educated A MEMOIR</p>
+            <p>Significant reading has more info number</p>
+            <p>Author - 23.05.2022</p>
+          </div>
+        </div>
+        <div class="book">
+          <div class="book-image" style="background-image: url(../asset/images/cantHurtMeCover.jpg);"></div>
+          <div class="book-info">
+            <h2>THE LAST FOUR THINGS</h2>
+            <p>Educated A MEMOIR</p>
+            <p>Significant reading has more info number</p>
+            <p>Author - 23.05.2022</p>
+          </div>
+        </div>
+        <!-- Add more books here -->
+      </div>
+    </Search-result>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="column">
+        <h2>What is "API Book"?</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+      </div>
+      <div class="column">
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="#">Randoms book</a></li>
+          <li><a href="#">Randoms autor</a></li>
+          <li><a href="#">Randoms comment</a></li>
+          <li><a href="#">Best ratings book</a></li>
+          <li><a href="#">Best ratings autor</a></li>
+        </ul>
+      </div>
+      <div class="column">
+        <h2>Usefull</h2>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Log out</a></li>
+          <li><a href="#">Search book</a></li>
+        </ul>
+      </div>
+      <div class="column">
+        <h2>Contact Info</h2>
+        <p>Address: Av. Recordon 1bis, 1004 Lausanne, Switzerland</p>
+        <p>Phone: +123456789</p>
+        <p>Email: api.book@etml.ch</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../test.js"></script>
 </body>
+
 </html>

@@ -41,7 +41,7 @@ authorRouter.get("/",auth, (req, res) => {
 
 //// Get one author by id
 
-authorRouter.get("/:id", auth, (req, res) => {
+authorRouter.get("/:id", (req, res) => {
   modelAuthor
     .findByPk(req.params.id)
     .then((author) => {
