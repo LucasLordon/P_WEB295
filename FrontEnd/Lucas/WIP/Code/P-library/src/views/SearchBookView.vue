@@ -2,19 +2,52 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import searchResult from  "@/components/ShearchBookView/searchResult.vue";
+import BookService from "@/services/BookService";
 
 
+const books = ref(null);
+const error = ref(null);
+
+
+onMounted(async () => {
+  try {
+    const response = await BookService.getBooks();
+    books.value = response.data;
+    console.log(books.value.data[1].authors_id);
+
+  } catch (err) {
+    error.value = "Une erreur s'est produite lors du chargement des livres.";
+    console.error(err);
+  }
+});
 </script>
 
 <template>
-
+  <div>
+    <div v-if="error">
+      <h1>{{ error }}</h1>
+    </div>
+    <div v-else-if="books !== null">
       <div id="Search-book">
-        <searchResult></searchResult>
+        <div class="book-list">
+          <searchResult v-for="book in books.data" :key="book.id" :book="book"></searchResult>
+        </div>
         <h1>test</h1>
       </div>
+    </div>
+    <div v-else>
+      <p>Chargement en cours...</p>
+    </div>
+  </div>
+      
 </template>
 
 <style>
+  .book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
 #Search-book {
     max-width: 1200px;

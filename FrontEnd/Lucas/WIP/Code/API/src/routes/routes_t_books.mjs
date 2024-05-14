@@ -2,6 +2,7 @@ import express from "express";
 import { success } from "./helper.mjs";
 import { modelBook } from "../db/sequelize.mjs";
 import { modelComment } from "../db/sequelize.mjs";
+import { modelAuthor } from "../db/sequelize.mjs";
 import { ValidationError, Op } from 'sequelize';
 import { auth } from "../auth/auth.mjs";
 import { modelCategory } from "../db/sequelize.mjs";
@@ -190,5 +191,34 @@ booksRouter.post("/:id/comments/", auth, (req, res) => {
         });
 });
 
+
+booksRouter.get("/:id/authors/", async (req, res) => {
+    modelBook.findByPk(req.params.id)
+        .then((book) => {
+            if (book === null) {
+                const message =
+                    "Le livre demandée n'existe pas. Merci de réessayer avec un autre identifiant.";
+                return res.status(404).json({ message });
+            }
+            return modelAuthor.findAndCountAll({
+                where: {
+                    books_id: book.id,
+                }
+            }).then((authors) => {
+                let message;
+                if (authors.count === 0) {
+                    message = `Il n'y a pas de commentaires pour la catégorie dont l'id vaut ${book.id}.`;
+                } else {
+                    message = `La liste des commentaires de la catégorie dont l'id vaut ${book.id} a bien été récupérée.`;
+                }
+                res.json({ message, data: authors });
+            });
+        })
+        .catch((error) => {
+            const message =
+                "La liste des commentaires du livre n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
+            res.status(500).json({ message, data: error });
+        });
+});
 
 export { booksRouter };
