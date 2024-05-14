@@ -36,7 +36,8 @@ export default{
     return{
       pseudo :"",
       passWord :"",
-      token: ""
+      token: "",
+      userId:""
     };
   },
   methods:{
@@ -51,9 +52,13 @@ export default{
             mot_de_passe: this.passWord,
           })
           .then((response) => {
+            // TOOOOO DOOOO retirer avant de rendre le projet
             console.log(response.data);
             alert(response.data.message);
             this.token = response.data.token; // Utilisation de this ici fonctionnera correctement
+            this.userId = response.data.data.id;
+            console.log("Iddddd : " + this.userId)
+            localStorage.setItem('idOfUser',this.userId)
             // met un variable dans le cache du navigateur
             localStorage.setItem('tokenOfUser',this.token)
         })

@@ -38,16 +38,16 @@ categorysRouter.get("/", auth, (req, res) => {
       res.status(500).json({ message, data: error });
     });
 });
-categorysRouter.get("/booksCategorys", (req, res) => {
-  if (req.query.category) {
+categorysRouter.get("/booksCategorys", auth,(req, res) => {
+  if (req.body) {
     return modelCategory.findOne({
-      where: { category: { [Op.like]: `%${req.query.category}%` } },
+      where: { category: { [Op.like]: `%${req.body.category}%` } },
     }).then((categorieFinded) => {
       modelBook.findAll({
         where: { categories_id: { [Op.eq]: categorieFinded.id } },
       }).then((books) => {
         if (categorieFinded.id !== null) {
-          const message = `Voici tout les livre ayant comme catégorie ${req.query.category}`;
+          const message = `Voici tout les livre ayant comme catégorie ${req.body.category}`;
           res.json(success(message, books));
           console.log(categorieFinded.id);
         }
@@ -55,6 +55,19 @@ categorysRouter.get("/booksCategorys", (req, res) => {
           return
         }
       });
+    }).catch((error) => {
+      const message = "La liste des categories n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
+      res.status(500).json({ message, data: error });
+    })
+  }
+});
+categorysRouter.get("/categoriesName",(req, res) => {
+  if (req.body.category) {
+    return modelCategory.findOne({
+      where: { category: { [Op.like]: `%${req.body.category}%` } },
+    }).then((categorieFinded) => {
+      const message ="Voici la liste des catégories"
+      res.json({message, data: categorieFinded})
     }).catch((error) => {
       const message = "La liste des categories n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
       res.status(500).json({ message, data: error });
@@ -93,7 +106,7 @@ categorysRouter.get("/:id/books/", auth, async (req, res) => {
 });
 //// Get one category by id
 
-categorysRouter.get("/:id", auth, (req, res) => {
+categorysRouter.get("/:id", /*auth,*/ (req, res) => {
   modelCategory
     .findByPk(req.params.id)
     .then((category) => {
