@@ -15,7 +15,7 @@ onMounted(async () => {
   try {
     const response = await BookService.getBooks();
     books.value = response.data;
-    console.log(books.value.data.length);
+    console.log(books.value.data);
 
     const response2 = await AuthorService.getAuthors(1);
     author.value = response2.data;

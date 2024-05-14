@@ -13,7 +13,7 @@ export default {
   getBooks() {
     return apiClient.get('/')
   },
-  getEvent(id) {
-    return apiClient.get('/events/'+id)
+  getBooksAuthors(id) {
+    return apiClient.get('/'+id+'/authors/')
   }
 }
