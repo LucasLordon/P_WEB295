@@ -43,7 +43,7 @@ booksRouter.get("/",  (req, res) => {
 
 //// Get one book by id
 
-booksRouter.get("/:id", auth, (req, res) => {
+booksRouter.get("/:id", (req, res) => {
     modelBook.findByPk(req.params.id).then((book) => {
         if (book === null) {
             const message =
