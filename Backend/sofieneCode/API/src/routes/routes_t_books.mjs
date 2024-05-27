@@ -119,7 +119,7 @@ booksRouter.delete("/:id", auth, (req, res) => {
 
 //Put a book
 
-booksRouter.put("/:id", auth, (req, res) => {
+booksRouter.put("/:id", auth,(req, res) => {
     let bookId = req.params.id;
     modelBook.update(req.body, { where: { id: bookId } })
       .then((_) => {

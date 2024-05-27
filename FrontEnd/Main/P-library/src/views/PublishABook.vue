@@ -53,7 +53,7 @@ export default {
       image: "",
       summary: "",
       nameOfCategory: "",
-      categories_id: 2,
+      categories_id: "",
       page_count: "",
       customers_id: "",
       authors_id: 3,
@@ -66,11 +66,10 @@ export default {
       return this.page_count
     },
     async getCategoryByName() {
+      let isDataNull = 0;
       this.token = localStorage.getItem('tokenOfUser');
       await axios
-          .get('http://localhost:3000/api/categories/categoriesName', {
-            category: this.nameOfCategory,
-          },
+          .get(`http://localhost:3000/api/categories/categoriesName?category=${this.nameOfCategory}`,
             {
               headers: {
                 'Authorization': 'Bearer ' + this.token
@@ -78,9 +77,37 @@ export default {
             })
           .then((response) => {
             ////TO DOOOOOOO : SUPPRIMEZ LE CACHE QUAND LE NAV EST FERMé
-            console.log(response.data);
-            alert(response.data.message);
-
+            if(response.data.data == null){
+              isDataNull = response.data.data
+            }
+            else{
+              this.categories_id = response.data.data.id;
+            }
+          })
+          .catch((error) => {
+            const errorMessage = error.response.data.message;
+            alert(errorMessage);
+            console.log(this.token);
+          })
+          if (isDataNull == null){
+            await this.createCategoryIfNoneExist();
+          }
+    },
+    async createCategoryIfNoneExist(){
+      this.token = localStorage.getItem('tokenOfUser');
+      await axios
+          .post(`http://localhost:3000/api/categories`,
+          {
+            category: this.nameOfCategory
+          }, 
+          {
+              headers: {
+                'Authorization': 'Bearer ' + this.token
+              }
+            })
+          .then((response) => {
+            ////TO DOOOOOOO : SUPPRIMEZ LE CACHE QUAND LE NAV EST FERMé
+            this.categories_id = response.data.data.id;
           })
           .catch((error) => {
             console.error(error);
@@ -90,11 +117,11 @@ export default {
           })
     },
     async publishBook() {
-      this.getCategoryByName();
-      if (this.title === "" || this.summary === "" || this.image === "" || this.page_count === "") {
+      if (this.title === "" || this.summary === "" || this.image === "" || this.page_count === "" || this.nameOfCategory === "") {
         alert("Le fomulaire doit être totalement remplis")
       }
       else {
+        await this.getCategoryByName();
         this.customers_id = localStorage.getItem('idOfUser')
         this.token = localStorage.getItem('tokenOfUser');
         this.page_count = this.infoToInt();
@@ -116,15 +143,11 @@ export default {
             })
           .then((response) => {
             ////TO DOOOOOOO : SUPPRIMEZ LE CACHE QUAND LE NAV EST FERMé
-            console.log(response.data);
             alert(response.data.message);
-
           })
           .catch((error) => {
-            console.error(error);
             const errorMessage = error.response.data.message;
             alert(errorMessage);
-            console.log(this.token);
           })
       }
     }
