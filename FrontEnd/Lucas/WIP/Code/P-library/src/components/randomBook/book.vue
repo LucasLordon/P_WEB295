@@ -32,7 +32,7 @@ defineProps({
             </div>
         </div>
         <div class="book-right">
-            <img src="../../assets/images/Books/cantHurtMe/bookCover.jpg" alt="Book of the day cover">
+            <img src="@/assets/images/Books/cantHurtMe/bookCover.jpg" alt="Book of the day cover">
         </div>
     </div>
 </template>
