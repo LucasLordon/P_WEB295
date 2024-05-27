@@ -62,9 +62,9 @@ categorysRouter.get("/booksCategorys", auth,(req, res) => {
   }
 });
 categorysRouter.get("/categoriesName",(req, res) => {
-  if (req.body.category) {
+  if (req.query.category) {
     return modelCategory.findOne({
-      where: { category: { [Op.like]: `%${req.body.category}%` } },
+      where: { category: { [Op.like]: `%${req.query.category}%` } },
     }).then((categorieFinded) => {
       const message ="Voici la liste des catégories"
       res.json({message, data: categorieFinded})

@@ -11,8 +11,9 @@ import { RouterLink, RouterView } from 'vue-router'
               <a class="activePage">Home</a>
               <div class="header-right">
                 <div class="right-content">
-                  <RouterLink to="/publishBooks">Publier un livre</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
+                <RouterLink to="/publishBooks">Publier un livre</RouterLink>
+                <RouterLink to="/connect">Se connecter</RouterLink>
+                <RouterLink to="/CreateAccount">Créer un compte</RouterLink>
                 <RouterLink to="/DetailOfBooks">Details Livre</RouterLink>
                   <RouterLink class="activePage" to="/">Home</RouterLink>
                   <div class="dropdown">
