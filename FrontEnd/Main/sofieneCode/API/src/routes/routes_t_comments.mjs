@@ -12,7 +12,7 @@ commentsRouter.get("/", (req, res) => {
         if (req.query.comment.length < 2) {
             const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
             return res.status(400).json({ message });
-            }
+        }
         let limit = 3;
         if (req.query.limit) {
             limit = parseInt(req.query.limit);
@@ -26,7 +26,7 @@ commentsRouter.get("/", (req, res) => {
             res.json(success(message, comments));
         });
     }
-    modelComment.findAll({order:["comment"]}).then((comments) => {
+    modelComment.findAll({ order: ["comment"] }).then((comments) => {
         const message = "La liste des comments a bien été récupérée.";
         res.json(success(message, comments));
     })
@@ -35,6 +35,16 @@ commentsRouter.get("/", (req, res) => {
                 "La liste des comments n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
             res.status(500).json({ message, data: error });
         });
+});
+
+commentsRouter.get("/commentsOfBook/:id", (req, res) => {
+    return modelComment.findAndCountAll({
+        where: { books_id: { [Op.eq]: `${req.params.id}` } },
+        order: ["comment"],
+    }).then((comments) => {
+        const message = `Il y a ${comments.count} comments qui correspondent au terme de la recherche`;
+        res.json(success(message, comments));
+    });
 });
 
 //// Get one comment by id

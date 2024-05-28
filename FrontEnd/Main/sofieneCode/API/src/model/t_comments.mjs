@@ -21,6 +21,12 @@ const CommentModel = (sequelize, DataTypes) => {
                     },
                 }
             },
+            appreciation:{
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                validate: {
+                }
+            },
             books_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,

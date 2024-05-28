@@ -148,6 +148,7 @@ const importComment = () => {
     dataComment.map((comment) => {
         modelComment.create({
             comment: comment.comment,
+            appreciation:comment.appreciation,
             books_id: comment.books_id,
             com_customers_id: comment.com_customers_id,
         }).then((comment) => console.log(comment.toJSON()));

@@ -10,7 +10,28 @@
       <br>
       <p>Résumé : {{ detailsOfBook.data.summary }}</p>
       <br>
+      <p>Moyenne des appréciations : {{rating}}</p>
+      <br>
       <p>categorie : {{ categorie }}</p>
+      <div class="PostComment" v-if="postComment == true">
+        <h3>Ajouter un commentaire</h3>
+        <form class="PostCommentWithAppreciation" @submit.prevent="updateBook">
+          <label for="comment">Commentaire :</label>
+          <input id="comment" v-model="comment">
+
+          <label for="appreciation">Appreciation</label>
+          <select name="selectionOfAppreciation" id="selectionOfAppreciation" v-model="ratingOfUser">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+
+          <input class="button" type="submit" value="Ajouter commentaire">
+        </form>
+      </div>
+      <br>
       <div class="editionOfBook" v-if="wantToEdit == true">
       <form class="CreateAccountForm" @submit.prevent="updateBook">
         <label for="title">titre :</label>
@@ -30,6 +51,7 @@
     </div>
       <button @click="DeleteBook">Supprimez le livre</button>
       <button @click="showFormToEdit">Editer</button>
+      <button @click="showFormToPutComment">Ajouter un commentaire</button>
     </div>
   </div>
   <div v-else>
@@ -58,15 +80,20 @@ export default {
       token: '',
       categorie:"",
       wantToEdit:false,
+      postComment:false,
       page_count: "",
       nameOfCategory: "",
       summary: "",
       title: "",
       nameOfCategory: "",
-      categories_id:""
+      categories_id:"",
+      rating: 0,
+      comment:"",
+      ratingOfUser: 0
     };
   },
   async mounted() {
+    await this.GetAppreciationOfBook();
     await this.GetDetailOfBook();
     await this.getNameOfCategorie();
   },
@@ -91,6 +118,34 @@ export default {
           alert(errorMessage);
           console.log(this.token);
         })
+    },
+    showFormToPutComment(){
+      this.postComment = true
+    },
+    async GetAppreciationOfBook(){
+      await axios
+        .get(`http://localhost:3000/api/comments/commentsOfBook/${this.idOfBook}`)
+        .then((response) => {
+          ////TO DOOOOOOO : SUPPRIMEZ LE CACHE QUAND LE NAV EST FERMé
+          console.log(response.data);
+          let allRating  = [];
+          for(let i =0; i< response.data.data.count;i++){
+            allRating.push(response.data.data.rows[i].appreciation);
+          }
+          for(let i = 0;i<allRating.length;i++){
+            this.rating += allRating[i]
+            this.rating
+          }
+          this.rating = this.rating/allRating.length;
+        })
+        .catch((error) => {
+          console.error(error);
+          const errorMessage = error.response.data.message;
+          alert(errorMessage);
+        })
+    },
+    async postCommentAndAppreciation(){
+
     },
     async DeleteBook() {
       await axios
