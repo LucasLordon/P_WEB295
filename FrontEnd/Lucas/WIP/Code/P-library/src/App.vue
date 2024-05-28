@@ -12,6 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
               <div class="header-right">
                 <div class="right-content">
                   <RouterLink class="activePage" to="/">Home</RouterLink>
+                  <RouterLink  to="/about">About</RouterLink>
                   <div class="dropdown">
                     <button class="dropbtn">More page</button>
                     <div class="dropdown-content">
