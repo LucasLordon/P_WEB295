@@ -9,7 +9,7 @@ const categorysRouter = express();
 
 ///// Get ALL categorys
 
-categorysRouter.get("/", auth, (req, res) => {
+categorysRouter.get("/", (req, res) => {
   if (req.query.category) {
     if (req.query.category.length < 2) {
       const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
@@ -38,7 +38,7 @@ categorysRouter.get("/", auth, (req, res) => {
       res.status(500).json({ message, data: error });
     });
 });
-categorysRouter.get("/booksCategorys", auth,(req, res) => {
+categorysRouter.get("/booksCategorys", (req, res) => {
   if (req.body) {
     return modelCategory.findOne({
       where: { category: { [Op.like]: `%${req.body.category}%` } },
@@ -74,7 +74,7 @@ categorysRouter.get("/categoriesName",(req, res) => {
     })
   }
 });
-categorysRouter.get("/:id/books/", auth, async (req, res) => {
+categorysRouter.get("/:id/books/", async (req, res) => {
 
   modelCategory.findByPk(req.params.id)
     .then((category) => {

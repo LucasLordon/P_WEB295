@@ -9,7 +9,7 @@ const authorRouter = express();
 
 ///// Get ALL authors
 
-authorRouter.get("/",auth, (req, res) => {
+authorRouter.get("/", (req, res) => {
     if (req.query.author) {
         if (req.query.author.length < 2) {
             const message = `Le terme de la recherche doit contenir au moins 2 caractères`;
@@ -41,7 +41,7 @@ authorRouter.get("/",auth, (req, res) => {
 
 //// Get one author by id
 
-authorRouter.get("/:id", auth, (req, res) => {
+authorRouter.get("/:id", (req, res) => {
   modelAuthor
     .findByPk(req.params.id)
     .then((author) => {
@@ -133,7 +133,7 @@ authorRouter.put("/:id", auth, (req, res) => {
 });
 
 // Route pour obtenir les livres par ID auteur
-authorRouter.get("/:id/books", auth, (req, res) => {
+authorRouter.get("/:id/books",(req, res) => {
     // Vérifier si le paramètre ID auteur existe dans la requête
     if(req.params.id) {
         // Trouver un enregistrement dans la table "Auteur" où l'ID auteur correspond
@@ -174,6 +174,7 @@ authorRouter.get("/:id/books", auth, (req, res) => {
         res.status(400).json({ message });
     }
   });
+  
   
 
 export { authorRouter };
