@@ -33,27 +33,29 @@
       </div>
       <br>
       <div class="editionOfBook" v-if="wantToEdit == true">
-      <h3>Modifier le livre</h3>
-      <form class="CreateAccountForm" @submit.prevent="updateBook">
-        <label for="title">titre :</label>
-        <input id="title" v-model="title">
+        <h3>Modifier le livre</h3>
+        <form class="CreateAccountForm" @submit.prevent="updateBook">
+          <label for="title">titre :</label>
+          <input id="title" v-model="title">
 
-        <label for="summary">résumé :</label>
-        <input id="summary" v-model="summary">
+          <label for="summary">résumé :</label>
+          <input id="summary" v-model="summary">
 
-        <label for="page_count">Nombre de page :</label>
-        <input id="page_count" v-model="page_count">
+          <label for="page_count">Nombre de page :</label>
+          <input id="page_count" v-model="page_count">
 
-        <label for="nameOfCategory">Catégorie :</label>
-        <input id="nameOfCategory" v-model="nameOfCategory">
+          <label for="nameOfCategory">Catégorie :</label>
+          <input id="nameOfCategory" v-model="nameOfCategory">
 
-        <input class="button" type="submit" value="Update">
-      </form>
-      <div class="popUp">
-        <p>Etes vous sur</p>
+          <input class="button" type="submit" value="Update">
+        </form>
       </div>
-    </div>
-      <button @click="DeleteBook">Supprimez le livre</button>
+      <div class="popUp" v-if="popUpVisible">
+        <p>Voulez-vous vraiment supprimé ce livre ?</p>
+        <button @click="DeleteBook">Supprimer</button>
+        <button @click="showDeletePopUp">Annuler</button>
+      </div>
+      <button @click="showDeletePopUp">Supprimez le livre</button>
       <button @click="showFormToEdit">Editer</button>
       <button @click="showFormToPutComment">Ajouter un commentaire</button>
     </div>
@@ -71,6 +73,17 @@
 .editionOfBook {
   text-align: center;
   /* Centrage horizontal */
+}
+.popUp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
 }
 </style>
 
@@ -93,7 +106,8 @@ export default {
       categories_id:"",
       rating: 0,
       comment:"",
-      ratingOfUser: 0 
+      ratingOfUser: 0,
+      popUpVisible : false
     };
   },
   async mounted() {
@@ -182,6 +196,14 @@ export default {
           const errorMessage = error.response.data.message;
           alert(errorMessage);
         })
+      }
+    },
+    showDeletePopUp(){
+      if(!this.popUpVisible){
+        this.popUpVisible = true
+      }
+      else{
+        this.popUpVisible = false
       }
     },
     async DeleteBook() {
