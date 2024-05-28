@@ -1,16 +1,31 @@
 <script setup>
 defineProps({
+    book: {
+    type: Object,
+    required: true,
+    },
     author: {
     type: Object,
     required: true,
   },
 })
+
+
+
+const getBookCoverUrl = (image) => {
+  try {
+    return `/Books/${image}/authorCover.jpg`;
+  } catch (e) {
+    console.error("Erreur lors du chargement de l'image du livre :", e);
+    return '';
+  }
+};
 </script>
 
 <template>
     <div id="author">
             <div class="author-left">
-                <img src="../../assets/images/Books/cantHurtMe/authorCover.jpg" alt="Author of the day">
+                <img :src="getBookCoverUrl(book.data.image)" alt="Author of the day">
             </div>
             <div class="author-right">
                 <h1>About {{ author.data.name }} {{ author.data.firstName }}</h1>

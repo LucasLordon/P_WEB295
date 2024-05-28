@@ -1,40 +1,49 @@
 <script setup>
+import { defineProps } from 'vue';
 
 defineProps({
-  books: {
+  book: {
     type: Object,
     required: true,
   },
 })
 
+const getBookCoverUrl = (image) => {
+  try {
+    return `/Books/${image}/bookCover.jpg`;
+  } catch (e) {
+    console.error("Erreur lors du chargement de l'image du livre :", e);
+    return '';
+  }
+};
 </script>
 
 <template>
-    <div id="book">
-        <div class="book-left">
-            <h1>Welcome</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <h2>Book of the day :</h2>
-            <h2>{{ books.data[0].title }}</h2>
-            <div class="info-line">
-                <div class="info-item">
-                    <h3>Pages:</h3>
-                    <p>{{ books.data[0].page_count }}</p>
-                </div>
-                <div class="info-item">
-                    <h3>Length:</h3>
-                    <p>{{(books.data[0].page_count*2/60).toFixed(0) }} hours</p>
-                </div>
-                <div class="info-item">
-                    <h3>Rating:</h3>
-                    <p>4.5/5 (305 ratings)</p>
-                </div>
-            </div>
+  <div id="book">
+    <div class="book-left">
+      <h1>Welcome</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>Book of the day :</h2>
+      <h2>{{ book.data.title }}</h2>
+      <div class="info-line">
+        <div class="info-item">
+          <h3>Pages:</h3>
+          <p>{{ book.data.page_count }}</p>
         </div>
-        <div class="book-right">
-            <img src="../../assets/images/Books/cantHurtMe/bookCover.jpg" alt="Book of the day cover">
+        <div class="info-item">
+          <h3>Length:</h3>
+          <p>{{(book.data.page_count*2/60).toFixed(0) }} hours</p>
         </div>
+        <div class="info-item">
+          <h3>Rating:</h3>
+          <p>4.5/5 (305 ratings)</p>
+        </div>
+      </div>
     </div>
+    <div class="book-right">
+      <img :src="getBookCoverUrl(book.data.image)" alt="Book of the day cover">
+    </div>
+  </div>
 </template>
 
 <style scoped>
