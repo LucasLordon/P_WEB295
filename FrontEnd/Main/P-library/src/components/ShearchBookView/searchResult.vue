@@ -1,6 +1,7 @@
 <script setup>
 import BookService from "@/services/BookService";
 import { ref, onMounted } from "vue";
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   book: { required: true }
@@ -8,6 +9,12 @@ const props = defineProps({
 
 const author = ref(null);
 const error = ref(null);
+
+const router = useRouter();
+
+const navigateToDetailOfBooks = () => {
+  router.push({ name: 'DetailOfBooks', params: { id: props.book.id } });
+};
 
 const getBookCoverUrl = (image) => {
   try {
@@ -27,7 +34,6 @@ onMounted(async () => {
     console.error(err);
   }
 });
-
 </script>
 
 <template>
@@ -36,7 +42,7 @@ onMounted(async () => {
       <h1>{{ error }}</h1>
     </div>
     <div v-else-if="author !== null && book !== null">
-      <div class="book-list">
+      <div class="book-list" @click="navigateToDetailOfBooks">
         <div class="book" href="#pages">
           <div class="book-image" :style="{ backgroundImage: `url(${getBookCoverUrl(book.image)})` }"></div>
           <div class="book-info">
@@ -68,6 +74,7 @@ onMounted(async () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  cursor: pointer;
 }
 
 .book {

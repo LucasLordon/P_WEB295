@@ -72,10 +72,12 @@
 
 <script>
 import axios from 'axios';
+import { useRoute } from 'vue-router'
+const route = useRoute()
 export default {
   data() {
     return {
-      idOfBook: '1',
+      idOfBook: '',
       detailsOfBook: {},
       token: '',
       categorie:"",
@@ -92,7 +94,9 @@ export default {
       ratingOfUser: 0
     };
   },
-  async mounted() {
+  async created() {
+    const route = useRoute();
+    this.idOfBook = route.params.id;
     await this.GetAppreciationOfBook();
     await this.GetDetailOfBook();
     await this.getNameOfCategorie();

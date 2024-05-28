@@ -27,8 +27,9 @@ const router = createRouter({
       component: ()=> import('../views/PublishABook.vue')
     },
     {
-      path: '/DetailOfBooks',
+      path: '/DetailOfBooks/:id/',
       name: 'DetailOfBooks',
+      props: true,
       component: ()=> import('../components/DetailOfBooks.vue')
     },
     {
