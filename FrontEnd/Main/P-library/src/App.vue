@@ -7,19 +7,19 @@ import { RouterLink, RouterView } from 'vue-router'
     <header>
       <div class="wrapper">
           <nav>
-              <img class="logo" src="../public/logo.png" alt="logo">
+              <img class="logo" src="/logo.png" alt="logo">
               <a class="activePage">Home</a>
               <div class="header-right">
                 <div class="right-content">
-                <RouterLink to="/publishBooks">Publier un livre</RouterLink>
+                
                 <RouterLink to="/connect">Se connecter</RouterLink>
                 <RouterLink to="/CreateAccount">Créer un compte</RouterLink>
-                <RouterLink to="/DetailOfBooks">Details Livre</RouterLink>
                   <RouterLink class="activePage" to="/">Home</RouterLink>
                   <div class="dropdown">
                     <button class="dropbtn">More page</button>
                     <div class="dropdown-content">
                       <RouterLink to="/search-book" class="dropdown-a">search book</RouterLink>
+                      <RouterLink to="/publishBooks" class="dropdown-a">Publier un livre</RouterLink>
                   </div>
                   </div>
                 </div>

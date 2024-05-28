@@ -32,7 +32,6 @@ onMounted(async () => {
         <div class="book-list">
           <searchResult v-for="book in books.data" :key="book.id" :book="book"></searchResult>
         </div>
-        <h1>test</h1>
       </div>
     </div>
     <div v-else>
