@@ -15,7 +15,7 @@
       <p>categorie : {{ categorie }}</p>
       <div class="PostComment" v-if="postComment == true">
         <h3>Ajouter un commentaire</h3>
-        <form class="PostCommentWithAppreciation" @submit.prevent="updateBook">
+        <form class="PostCommentWithAppreciation" @submit.prevent="postCommentAndAppreciation">
           <label for="comment">Commentaire :</label>
           <input id="comment" v-model="comment">
 
@@ -33,23 +33,29 @@
       </div>
       <br>
       <div class="editionOfBook" v-if="wantToEdit == true">
-      <form class="CreateAccountForm" @submit.prevent="updateBook">
-        <label for="title">titre :</label>
-        <input id="title" v-model="title">
+        <h3>Modifier le livre</h3>
+        <form class="CreateAccountForm" @submit.prevent="updateBook">
+          <label for="title">titre :</label>
+          <input id="title" v-model="title">
 
-        <label for="summary">résumé :</label>
-        <input id="summary" v-model="summary">
+          <label for="summary">résumé :</label>
+          <input id="summary" v-model="summary">
 
-        <label for="page_count">Nombre de page :</label>
-        <input id="page_count" v-model="page_count">
+          <label for="page_count">Nombre de page :</label>
+          <input id="page_count" v-model="page_count">
 
-        <label for="nameOfCategory">Catégorie :</label>
-        <input id="nameOfCategory" v-model="nameOfCategory">
+          <label for="nameOfCategory">Catégorie :</label>
+          <input id="nameOfCategory" v-model="nameOfCategory">
 
-        <input class="button" type="submit" value="Update">
-      </form>
-    </div>
-      <button @click="DeleteBook">Supprimez le livre</button>
+          <input class="button" type="submit" value="Update">
+        </form>
+      </div>
+      <div class="popUp" v-if="popUpVisible">
+        <p>Voulez-vous vraiment supprimé ce livre ?</p>
+        <button @click="DeleteBook">Supprimer</button>
+        <button @click="showDeletePopUp">Annuler</button>
+      </div>
+      <button @click="showDeletePopUp">Supprimez le livre</button>
       <button @click="showFormToEdit">Editer</button>
       <button @click="showFormToPutComment">Ajouter un commentaire</button>
     </div>
@@ -67,6 +73,17 @@
 .editionOfBook {
   text-align: center;
   /* Centrage horizontal */
+}
+.popUp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
 }
 </style>
 
@@ -91,7 +108,8 @@ export default {
       categories_id:"",
       rating: 0,
       comment:"",
-      ratingOfUser: 0
+      ratingOfUser: 0,
+      popUpVisible : false
     };
   },
   async created() {
@@ -124,7 +142,13 @@ export default {
         })
     },
     showFormToPutComment(){
-      this.postComment = true
+      if(!this.postComment){
+        this.postComment = true
+      }
+      else{
+        this.postComment = false
+      }
+      
     },
     async GetAppreciationOfBook(){
       await axios
@@ -149,7 +173,42 @@ export default {
         })
     },
     async postCommentAndAppreciation(){
-
+      let idOfUser = localStorage.getItem("idOfUser");
+      if(this.comment ===""){
+        this.comment = "Pas de commentaire";
+      }
+      if(this.ratingOfUser === null || this.ratingOfUser === undefined){
+        alert("Veuillez entrer un appréciation");
+      }
+      else{
+        await axios
+        .post(`http://localhost:3000/api/comments`,
+        {
+          comment:this.comment,
+          appreciation: this.ratingOfUser,
+          books_id: this.idOfBook,
+          com_customers_id:idOfUser
+        })
+        .then((response) => {
+          ////TO DOOOOOOO : SUPPRIMEZ LE CACHE QUAND LE NAV EST FERMé
+          console.log(response.data);
+          alert("Commentaire ajouté")
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error(error);
+          const errorMessage = error.response.data.message;
+          alert(errorMessage);
+        })
+      }
+    },
+    showDeletePopUp(){
+      if(!this.popUpVisible){
+        this.popUpVisible = true
+      }
+      else{
+        this.popUpVisible = false
+      }
     },
     async DeleteBook() {
       await axios
@@ -194,7 +253,13 @@ export default {
         })
     },
     showFormToEdit(){
-      this.wantToEdit = true;
+      if(!this.wantToEdit){
+        this.wantToEdit = true;
+      }
+      else{
+        this.wantToEdit = false;
+      }
+      
     },
     async updateBook(){
       if(this.title ===""){
