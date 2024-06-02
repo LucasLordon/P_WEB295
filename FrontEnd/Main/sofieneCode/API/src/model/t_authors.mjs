@@ -5,9 +5,8 @@ const Authormodel = (sequelize, DataTypes) => {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
-                autoIncrement: true,
-                validate: {
-                }
+                autoIncrement: false, // Ensure this is set to false to prevent auto-incrementing when ID is provided
+                allowNull: false,     // Ensure ID is provided
             },
             name: {
                 type: DataTypes.STRING,
@@ -41,4 +40,5 @@ const Authormodel = (sequelize, DataTypes) => {
         }
     );
 };
+
 export { Authormodel };

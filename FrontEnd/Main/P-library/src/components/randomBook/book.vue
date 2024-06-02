@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
 
+
 defineProps({
   book: {
     type: Object,
@@ -21,10 +22,10 @@ const getBookCoverUrl = (image) => {
 <template>
   <div id="book">
     <div class="book-left">
-      <h1>Welcome</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h1>Book Title : {{ book.data.title }}</h1>
+      <h2>summary :</h2>
+      <p>{{ book.data.summary }}</p>
       <h2>Book of the day :</h2>
-      <h2>{{ book.data.title }}</h2>
       <div class="info-line">
         <div class="info-item">
           <h3>Pages:</h3>
@@ -34,14 +35,14 @@ const getBookCoverUrl = (image) => {
           <h3>Length:</h3>
           <p>{{(book.data.page_count*2/60).toFixed(0) }} hours</p>
         </div>
-        <div class="info-item">
+        <!-- <div class="info-item">
           <h3>Rating:</h3>
           <p>4.5/5 (305 ratings)</p>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="book-right">
-      <img :src="getBookCoverUrl(book.data.image)" alt="Book of the day cover">
+      <img :src="getBookCoverUrl(book.data.image)" alt="Book cover">
     </div>
   </div>
 </template>

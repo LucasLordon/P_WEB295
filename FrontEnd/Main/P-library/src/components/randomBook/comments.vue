@@ -1,16 +1,25 @@
 <script setup>
+import { defineProps } from 'vue';
 
+defineProps({
+  book: {
+    type: Object,
+    required: true,
+  },
+})
 </script>
 
 <template>
         <div id="comments">
             <div class="comment-left">
-                <h1>What Readers Say About the Book</h1>
+                <!-- <h1>What Readers Say About the Book</h1>
                 <p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators.</p>
-                <p>Overall Customer Ratings (4.8/5)</p>
-                <button class="comment-btn">More Comments</button>
+                <p>Overall Customer Ratings (4.8/5)</p> -->
+                <RouterLink :to="`/BookComments/${book.data.id}/`">
+                    <button class="comment-btn">See Comments</button>
+                </RouterLink>
             </div>
-            <div class="comment-right">
+            <!-- <div class="comment-right">
                 <div class="info-line">
                     <div class="info-item">
                         <img src="../../assets/images/Users/default.png" alt="user1">
@@ -25,7 +34,7 @@
                         <p>All the Lorem Ipsum generators on the Internet tend to repeat willings predefined chunks value.</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 </template>
 

@@ -33,6 +33,11 @@ const router = createRouter({
       component: ()=> import('../components/DetailOfBooks.vue')
     },
     {
+      path: '/BookComments/:id/',
+      name: 'BookComments',
+      component: ()=> import('../components/BookComments.vue')
+    },
+    {
       path: '/CreateAccount',
       name: 'CreateAccount',
       component: ()=> import('../components/CreateAccount.vue')

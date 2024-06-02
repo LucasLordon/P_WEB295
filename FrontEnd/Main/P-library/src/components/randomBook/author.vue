@@ -11,7 +11,6 @@ defineProps({
 })
 
 
-
 const getBookCoverUrl = (image) => {
   try {
     return `/Books/${image}/authorCover.jpg`;
@@ -32,11 +31,11 @@ const getBookCoverUrl = (image) => {
     <div v-else-if="book && author">
         <div id="author">
             <div class="author-left">
-                <img :src="getBookCoverUrl(book.data.image)" alt="Author of the day">
+                <img :src="getBookCoverUrl(book.data.image)" alt="Author Image">
             </div>
             <div class="author-right">
-                <h1>About {{ author.data.firstName }} {{ author.data.name }}</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <h1>Ecris par :  {{ author.data.firstName }} {{ author.data.name }}</h1>
+                <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <div class="info-line">
                 <div class="info-item">
                     <h3>{{ book.data.publishedBooks }}</h3>
@@ -51,7 +50,7 @@ const getBookCoverUrl = (image) => {
                     <p>Total Comments</p>
                 </div>
                 </div>
-                <button class="author-btn">More about {{ author.data.firstName }} {{ author.data.name }}</button>
+                <button class="author-btn">More about {{ author.data.firstName }} {{ author.data.name }}</button> -->
             </div>
         </div>
     </div>

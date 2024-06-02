@@ -1,7 +1,7 @@
-import { DataTypes, Sequelize } from "sequelize"; //Import de  l'orm
-import bcrypt from 'bcrypt';//Import du système de cryptage
+import { DataTypes, Sequelize } from "sequelize"; // Import ORM
+import bcrypt from 'bcrypt'; // Import bcrypt for password hashing
 
-//Import des data
+// Import data
 import { dataCustomers } from "./mock-customer.mjs";
 import { dataBooks } from "../db/mock-book.mjs";
 import { dataCategory } from "../db/mock-category.mjs";
@@ -9,15 +9,13 @@ import { dataComment } from "./mock-comment.mjs";
 import { dataAuthor } from "./mock-author.mjs";
 import { dataWriting } from "./mock-writing.mjs";
 
-//Import des model
+// Import models
 import { CustomerModel } from "../model/t_customer.mjs";
 import { BookModel } from "../model/t_books.mjs";
 import { CategoryModel } from "../model/t_categorys.mjs";
 import { Authormodel } from "../model/t_authors.mjs";
-import {CommentModel} from "../model/t_comments.mjs";
+import { CommentModel } from "../model/t_comments.mjs";
 import { WritingModel } from "../model/t_writing.mjs";
-
-
 
 const sequelize = new Sequelize(
     "db_librairie",
@@ -27,12 +25,11 @@ const sequelize = new Sequelize(
         host: "localhost",
         port: 6033,
         dialect: "mysql",
-        //logging: false, // Pour avoir les logs : logging: console.log,
-        logging: console.log,
+        logging: console.log, // Enable logging
     }
 );
 
-//Transformation des model en model sequilize
+// Transform models into Sequelize models
 const modelCustomer = CustomerModel(sequelize, DataTypes);
 const modelBook = BookModel(sequelize, DataTypes);
 const modelCategory = CategoryModel(sequelize, DataTypes);
@@ -40,9 +37,9 @@ const modelComment = CommentModel(sequelize, DataTypes);
 // const modelWriting = WritingModel(sequelize, DataTypes);
 const modelAuthor = Authormodel(sequelize, DataTypes);
 
-//Fonction de création de la base de donnée (utilisée dans le app.mjs)
+// Function to create the database (used in app.mjs)
 let initDB = () => {
-    createForeignKeys();//Création des fk
+    createForeignKeys(); // Create foreign keys
     return sequelize
         .sync({ force: true })
         .then((_) => {
@@ -53,30 +50,11 @@ let initDB = () => {
             importComment();
             // importWriting();
             console.log("La base de donnée db_librairie a bien été créé");
-        });
+        })
+        .catch((error) => console.error('Error initializing the database:', error));
 };
 
-
 const createForeignKeys = () => {
-
-    //Permet de crée la bonne fk pour la table customer mais il y a des problème lors de l'import des données
-
-    /////////////////// Good relation ///////////////////
-
-    // modelBook.belongsTo(modelCustomer, {
-    //     foreignKey: "customers_id",
-    // });
-
-    // modelCustomer.hasMany(modelBook, {
-    //     foreignKey: "customers_id",
-    // });           
-
-    /////////////////////////////////////////////////////
-
-    // Un livre peut avoir plusieurs auteurs
-
-
-
     modelCategory.hasMany(modelBook, {
         foreignKey: "categories_id",
     });
@@ -98,21 +76,23 @@ const createForeignKeys = () => {
 };
 
 const importCustomer = () => {
-    dataCustomers.map((customer) => {
+    dataCustomers.forEach((customer) => {
         bcrypt
             .hash(customer.mot_de_passe, 10)
             .then((hash) => {
-                modelCustomer.create({
+                return modelCustomer.create({
                     pseudo: customer.pseudo,
                     date_entree: customer.date_entree,
                     mot_de_passe: hash
-                }).then((customer) => console.log(customer.toJSON()));
+                });
             })
+            .then((customer) => console.log(customer.toJSON()))
+            .catch((error) => console.error('Error inserting customer:', error));
     });
 };
 
 const importBooks = () => {
-    dataBooks.map((book) => {
+    dataBooks.forEach((book) => {
         modelBook.create({
             price: book.price,
             title: book.title,
@@ -122,45 +102,56 @@ const importBooks = () => {
             authors_id: book.authors_id,
             page_count: book.page_count,
             summary: book.summary
-        }).then((book) => console.log(book.toJSON()));
+        })
+        .then((book) => console.log(book.toJSON()))
+        .catch((error) => console.error('Error inserting book:', error));
     });
 };
 
 const importCategory = () => {
-    dataCategory.map((category) => {
+    dataCategory.forEach((category) => {
         modelCategory.create({
             category: category.category,
-        }).then((category) => console.log(category.toJSON()));
+        })
+        .then((category) => console.log(category.toJSON()))
+        .catch((error) => console.error('Error inserting category:', error));
     });
 };
 
 const importAuthor = () => {
-    dataAuthor.map((author) => {
+    dataAuthor.forEach((author) => {
         modelAuthor.create({
+            id: author.id, // Ensure the id is explicitly set
             name: author.name,
             firstName: author.firstName,
-        }).then((author) => console.log(author.toJSON()));
+        })
+        .then((author) => console.log(author.toJSON()))
+        .catch((error) => console.error('Error inserting author:', error));
     });
 };
 
 const importComment = () => {
-    dataComment.map((comment) => {
+    dataComment.forEach((comment) => {
         modelComment.create({
             comment: comment.comment,
-            appreciation:comment.appreciation,
+            appreciation: comment.appreciation,
             books_id: comment.books_id,
             com_customers_id: comment.com_customers_id,
-        }).then((comment) => console.log(comment.toJSON()));
+        })
+        .then((comment) => console.log(comment.toJSON()))
+        .catch((error) => console.error('Error inserting comment:', error));
     });
 };
 
 // const importWriting = () => {
-//     dataWriting.map((writing) => {
+//     dataWriting.forEach((writing) => {
 //         modelWriting.create({
 //             authors_id: writing.authors_id,
 //             books_id: writing.books_id,
-//         }).then((author) => console.log(author.toJSON()));
+//         })
+//         .then((writing) => console.log(writing.toJSON()))
+//         .catch((error) => console.error('Error inserting writing:', error));
 //     });
 // };
 
-export { sequelize, initDB, modelCustomer, modelBook, modelCategory, modelComment,modelAuthor };
+export { sequelize, initDB, modelCustomer, modelBook, modelCategory, modelComment, modelAuthor };

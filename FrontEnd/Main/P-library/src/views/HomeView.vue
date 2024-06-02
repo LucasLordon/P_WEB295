@@ -77,7 +77,7 @@ const decrementCount = async () => {
       <div class="randomBook">
         <Book :book="book"></Book>
         <Author :author="author" :book="book"></Author>
-        <Comments></Comments>
+        <Comments :book="book"></Comments>
       </div>
     </div>
     <div v-else>

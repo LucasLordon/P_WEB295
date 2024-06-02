@@ -56,7 +56,7 @@ export default {
       categories_id: "",
       page_count: "",
       customers_id: "",
-      authors_id: 3,
+      authors_id: 7,
       token: ""
     };
   },

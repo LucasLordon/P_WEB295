@@ -1,4 +1,5 @@
 let dataAuthor = [
+
     {
         id: 1,
         created: new Date(),
@@ -37,6 +38,13 @@ let dataAuthor = [
         created: new Date(),
         name: "Hugo",
         firstName: "Victor",
+    },
+    {
+        id: 7,
+        created: new Date(),
+        name: "Autheur",
+        firstName: " par default",
+  
     }
 ];
 

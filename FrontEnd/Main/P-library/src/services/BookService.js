@@ -18,5 +18,8 @@ export default {
   },
   getBooksAuthors(id) {
     return apiClient.get('/'+id+'/authors/')
+  },
+  getBooksComments(id) {
+    return apiClient.get('/'+id+'/comments/')
   }
 }
