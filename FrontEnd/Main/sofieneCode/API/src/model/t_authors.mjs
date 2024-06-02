@@ -32,10 +32,6 @@ const Authormodel = (sequelize, DataTypes) => {
                         msg: "Le firstName est une propriété obligatoire.",
                     },
                 }
-            },
-            books_id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
             }
         },
         {

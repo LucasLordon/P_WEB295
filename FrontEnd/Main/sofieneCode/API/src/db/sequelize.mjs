@@ -139,7 +139,6 @@ const importAuthor = () => {
         modelAuthor.create({
             name: author.name,
             firstName: author.firstName,
-            books_id: author.books_id,
         }).then((author) => console.log(author.toJSON()));
     });
 };

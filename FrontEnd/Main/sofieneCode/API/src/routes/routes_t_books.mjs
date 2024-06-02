@@ -193,33 +193,29 @@ booksRouter.post("/:id/comments/", auth, (req, res) => {
 });
 
 booksRouter.get("/:id/authors/", async (req, res) => {
-    modelBook.findByPk(req.params.id)
-        .then((book) => {
-            if (book === null) {
-                const message =
-                    "Le livre demandée n'existe pas. Merci de réessayer avec un autre identifiant.";
-                return res.status(404).json({ message });
-            }
-            return modelAuthor.findAndCountAll({
-                where: {
-                    books_id: book.id,
-                }
-            }).then((authors) => {
-                let message;
-                if (authors.count === 0) {
-                    message = `Il n'y a pas de commentaires pour la catégorie dont l'id vaut ${book.id}.`;
-                } else {
-                    message = `La liste des commentaires de la catégorie dont l'id vaut ${book.id} a bien été récupérée.`;
-                }
-                res.json({ message, data: authors });
-            });
-        })
-        .catch((error) => {
+    try {
+        const book = await modelBook.findByPk(req.params.id);
+        if (!book) {
             const message =
-                "La liste des commentaires du livre n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
-            res.status(500).json({ message, data: error });
-        });
+                "Le livre demandé n'existe pas. Merci de réessayer avec un autre identifiant.";
+            return res.status(404).json({ message });
+        }
+
+        const author = await modelAuthor.findByPk(book.authors_id);
+        let message;
+        if (!author) {
+            message = `Il n'y a pas d'auteur pour le livre dont l'id vaut ${book.id} avec le titre : ${book.title}.`;
+        } else {
+            message = `L'auteur du livre dont l'id vaut ${book.id} avec le titre : ${book.title} a bien été récupéré.`;
+        }
+        res.json({ message, data: author });
+    } catch (error) {
+        const message =
+            "L'auteur du livre n'a pas pu être récupéré. Merci de réessayer dans quelques instants.";
+        res.status(500).json({ message, data: error });
+    }
 });
+
 
 
 export { booksRouter };

@@ -22,32 +22,45 @@ const getBookCoverUrl = (image) => {
 };
 </script>
 
+
+
 <template>
-    <div id="author">
+  <div>
+    <div v-if="error">
+      <h1>{{ error }}</h1>
+    </div>
+    <div v-else-if="book && author">
+        <div id="author">
             <div class="author-left">
                 <img :src="getBookCoverUrl(book.data.image)" alt="Author of the day">
             </div>
             <div class="author-right">
-                <h1>About {{ author.data.name }} {{ author.data.firstName }}</h1>
+                <h1>About {{ author.data.firstName }} {{ author.data.name }}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <div class="info-line">
-                    <div class="info-item">
-                        <h3>01</h3>
-                        <p>Books Published</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>4.5</h3>
-                        <p>User Reviews</p>
-                    </div>
-                    <div class="info-item">
-                        <h3>04</h3>
-                        <p>Total Comment</p>
-                    </div>
+                <div class="info-item">
+                    <h3>{{ book.data.publishedBooks }}</h3>
+                    <p>Books Published</p>
                 </div>
-                <button class="author-btn">More about David Goggins</button>
+                <div class="info-item">
+                    <h3>{{ book.data.userReviews }}</h3>
+                    <p>User Reviews</p>
+                </div>
+                <div class="info-item">
+                    <h3>{{ book.data.totalComments }}</h3>
+                    <p>Total Comments</p>
+                </div>
+                </div>
+                <button class="author-btn">More about {{ author.data.firstName }} {{ author.data.name }}</button>
             </div>
         </div>
+    </div>
+    <div v-else>
+      <p>Chargement en cours...</p>
+    </div>
+  </div>
 </template>
+
 
 <style scoped>
 

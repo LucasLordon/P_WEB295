@@ -49,7 +49,7 @@ onMounted(async () => {
             <h2>{{ book.title }}</h2>
             <p>Résumé : </p>
             <p>{{ book.summary }}</p>
-            <p>Auteur : {{ author.data.rows[0].name }} {{ author.data.rows[0].firstName }}</p>
+            <p>Auteur : {{ author.data.name }} {{ author.data.firstName }}</p>
           </div>
         </div>
       </div>

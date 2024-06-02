@@ -21,7 +21,7 @@ onMounted(async () => {
     books.value = response.data;
     limit.value = books.value.data.length - 5;
     maxlimit.value = books.value.data.length;
-    countBook.value = parseInt(limit.value, 10); // Ensure countBook is an integer
+    countBook.value = parseInt(limit.value, 10);
 
     await updateBook();
     await updateAuthor();
@@ -37,7 +37,7 @@ const updateBook = async () => {
 };
 
 const updateAuthor = async () => {
-  const response = await AuthorService.getAuthors(countBook.value);
+  const response = await BookService.getBooksAuthors(countBook.value);
   author.value = response.data;
 };
 

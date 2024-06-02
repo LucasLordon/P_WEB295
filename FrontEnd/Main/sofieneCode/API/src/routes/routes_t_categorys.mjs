@@ -74,9 +74,27 @@ categorysRouter.get("/categoriesName",(req, res) => {
     })
   }
 });
-categorysRouter.get("/:id/books/", async (req, res) => {
+categorysRouter.get("/:id?/books/", async (req, res) => {
+  const categoryId = req.params.id;
 
-  modelCategory.findByPk(req.params.id)
+  if (!categoryId) {
+    // Si aucun ID de catégorie n'est fourni, retourner tous les livres
+    return modelBook.findAndCountAll({
+      order: ["title"],
+    })
+    .then((modelBook) => {
+      const message = `La liste de tous les livres a bien été récupérée.`;
+      res.json({ message, data: modelBook });
+    })
+    .catch((error) => {
+      const message =
+        "La liste des livres n'a pas pu être récupérée. Merci de réessayer dans quelques instants.";
+      res.status(500).json({ message, data: error });
+    });
+  }
+
+  // Si un ID de catégorie est fourni, retourner les livres de cette catégorie
+  modelCategory.findByPk(categoryId)
     .then((category) => {
       if (category === null) {
         const message =
@@ -104,6 +122,7 @@ categorysRouter.get("/:id/books/", async (req, res) => {
       res.status(500).json({ message, data: error });
     });
 });
+
 //// Get one category by id
 
 categorysRouter.get("/:id", /*auth,*/ (req, res) => {
